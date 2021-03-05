@@ -24,20 +24,20 @@ Lays out detailed descriptions for API and methods
    - `/floors`
       - `POST /hotels/:hotel_ID/floors` 
      	 - Creates a floor from room objects constructed on frontend) 
-		Expected Payload:
-			{
-			   'floor_ID': "1F",
-			    'rooms':
-			    {
-			       "101": {
-			          'type': (king, double, suite, ADA)
-			       },
-			       ...
-			    }
-			    ...
-			}
-		Success: will return { "floor_ID": floor ID, "rooms": list of rooms on the floor }
-		Error: 'Error: missing required input data' OR `Error: floor with ID=${floor_ID} already exists.`
+     	 - Expected Payload:
+     	 - 	{
+			'floor_ID': "1F",
+			 'rooms':
+			 {
+			    "101": {
+			       'type': (king, double, suite, ADA)
+			     },
+			     ...
+			 }
+			 ...
+		}
+     	 - Success: will return { "floor_ID": floor ID, "rooms": list of rooms on the floor }
+     	 - Error: 'Error: missing required input data' OR `Error: floor with ID=${floor_ID} already exists.`		
       - `GET /hotels/:hotel_ID/floors` 
 		Success: will return floors of the hotel
 		Error: 'missing hotel_ID from the path parameters' OR `Failed to get floors by hotel_ID=${hotel_ID}` 
