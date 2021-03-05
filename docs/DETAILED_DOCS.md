@@ -23,7 +23,7 @@ Lays out detailed descriptions for API and methods
    - `GET` or `GET /metrics (for all floors)` 
    - `/floors`
       - `POST /hotels/:hotel_ID/floors` 
-		Creates a floor from room objects constructed on frontend) 
+     	 - Creates a floor from room objects constructed on frontend) 
 		Expected Payload:
 			{
 			   'floor_ID': "1F",
