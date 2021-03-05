@@ -25,7 +25,7 @@ Lays out detailed descriptions for API and methods
       - `POST /hotels/:hotel_ID/floors` 
      	 - Creates a floor from room objects constructed on frontend) 
      	 - Expected Payload:
-     	 - 	{
+     		 - 	{
 			'floor_ID': "1F",
 			 'rooms':
 			 {
@@ -39,13 +39,13 @@ Lays out detailed descriptions for API and methods
      	 - Success: will return { "floor_ID": floor ID, "rooms": list of rooms on the floor }
      	 - Error: 'Error: missing required input data' OR `Error: floor with ID=${floor_ID} already exists.`		
       - `GET /hotels/:hotel_ID/floors` 
-		Success: will return floors of the hotel
-		Error: 'missing hotel_ID from the path parameters' OR `Failed to get floors by hotel_ID=${hotel_ID}` 
+        - Success: will return floors of the hotel
+      	- Error: 'missing hotel_ID from the path parameters' OR `Failed to get floors by hotel_ID=${hotel_ID}` 
       - `GET /metrics` 
    - `/floors/:id`
       - `GET /hotels/:hotel_ID/floors/:floor_ID`
-		Success: will return specific floor with the ID specified in the parameter
-		Error: 'missing hotel_ID or floor_ID from the path parameters'  OR `Failed to get floors by hotel_ID=${hotel_ID} and floor_ID=${floor_ID}`
+        - Success: will return specific floor with the ID specified in the parameter
+      	- Error: 'missing hotel_ID or floor_ID from the path parameters'  OR `Failed to get floors by hotel_ID=${hotel_ID} and floor_ID=${floor_ID}` 
       - `PUT` (updates floor object with rooms data) 
       - `DELETE`
       - `GET /metrics` (calculates metrics for a floor) 
