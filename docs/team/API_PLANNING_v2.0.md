@@ -1,63 +1,77 @@
 # API Planning
-
 Lays out general structure for API as well as what methods are needed and their respective functionalities.
 
 ## Endpoints
+**NOTE:**
+   1. `PUT` needs to provide all the fields, `PATCH` only required the modified fields
+   2. filters needed for query string should be checked again with the related screens
+   3. **For all the `GET /metrics` endpoint, we can also just implement the `GET` endpoint and let frontend do the calculation with raw data? TBD**
 
+###
 1. `/users`
+   - `POST` (create user) **#2-9**
    - `GET ?employmentType=HKP` **#46**
+   - `PATCH /:id` (update user profile) **#30, #51, #59**
    - `POST /login` **#1**
-   - `POST /create`	=> `POST /users` **#2, #3**
-   - `POST /update`	=> `PUT/PATCH /users/:id` **#30, #51, #59**
-   - **What about Reset Password?** **#65**
+   - `POST /reset-password` (send a reset password mail)  **#65**  
+   -> then maybe use `PATCH /users/:id` to update the password? How the email & verification works need further research
 
 2. `/hotels`
-   - `/create` => `POST /hotels` (creates hotel - from company side) 
-   - `/search` => `GET /hotels?HIN=${HIN}` (searches for hotel from HIN) **#8, #6, #4**
+   - `POST` (creates hotel - from company side) 
+   - `GET ?HIN=${HIN}` (searches for hotel from HIN) **#8, #6, #4**
 
 3. `/hotels/:id`
-   - `/layout` => **do we need this layer?**
-     - `GET /metrics (for all floors)` **#44**
-     - `/floors`
-         	- `/create` => `POST /floors`  (creates a floor from room objects) **#12**
-         	- `GET`  (gets raw data no calculation)	 **#18, #23**
-         	- `GET /metrics` (gets data with calculated metrics - rooms cleared...) questionable ^^^ **#37**
-     - `/floors/:id`
-           	- `/update` => `PUT/PATCH` (updates floor object with data) **#15**
-           	- `/rooms-and-metrics` => `/metrics` (calculates metrics for a floor) **#40**
-       - `/rooms`
-           	- `POST` **#13**
-           	- `GET ?filter1=${filter1}` (gets rooms on floor with query string) **#19, #24, #63?(search for all rooms or rooms on a floor?)**
-       - `/rooms/:id`
-         - `/get` => `GET	/rooms/:id` **#62**
-         - `POST/PUT /rooms/:id` **#41 #43 #54 #55**
+   - `GET` or `GET /metrics (for all floors)` **#44 TBD**
+   - `/floors`
+      - `POST`  (creates a floor from room objects constructed on frontend) **#13, #14**
+      - `GET` **#12, #18, #23**
+      - `GET /metrics` **#37 TBD** 
+   - `/floors/:id`
+      - `GET` **#19**
+      - `PUT` (updates floor object with rooms data) **#15, #16**
+      - `DELETE` **#13**
+      - `GET /metrics` (calculates metrics for a floor) **#40 TBD**
+      - `/rooms`
+        - `GET` (gets rooms on floor) **#19, #24**
+      - `/rooms/:id`
+        - `GET` **#62**
+        - `PATCH` (modify the `occupiedBy` field for checkin, the `isDecommissioned` for decommission, `serviceStatus` for problem solved, `type` for editing room type) **#15, #41, #42, #43, #55**
+        - `DELETE`
 
-7. `/update-logs`
-	- `GET ?startTime=$start$endTime=$end` **#38 #39**
-	- `POST` **#21, #28, #26(Guest info?), #27**
-	- `/current` => `GET ?isResolved=false&startTime=$now&endTime=none&issue=$issue` **#44?**
-	- `/resolve` => `PATCH /:id` **#42**
+4. `/update-logs`
+	- `POST` (HKP/FDR report issues with room) **#21, #28, #26, #27**
+	- `GET ?isResolved=false&startTime=$start$endTime=$end&category=$issueCategory` **#38, #39, #40, #44**
+	- `PATCH /:id` (mark a log as resolved) **#42**
 
-6. `/cleaning-logs`
-   - `/query` => `GET ?startTime=$start&endTime=$end&housekeeper=$HKP-user-id` 
-   		(querystring: takes in startTime, endTime, and maybe employee name)
-   		**#20, #31, #32, #56, #46**
-   - `POST /cleaning-logs` **#20, #62**
-   - `PATCH /cleaning-logs/:id` **#25**
+1. `/cleaning-logs`
+   - `POST /cleaning-logs` (start cleaning) **#20, #62**
+   - `GET ?startTime=$start&endTime=$end&housekeeper=$HKP-user-id` **#20, #31, #32, #33, #56, #46**
+   - `PATCH /:id` (end cleaning & rating) **#25**
 
-8. `GET /paysheets?startTime=$start&endTime=$end` or `GET /cleaning-logs/generate-paysheets?` **(use cleaning-logs to calculate payment for each HKP?)** **#56**
+2. `GET /paysheets?startTime=$start&endTime=$end` or `GET /cleaning-logs/generate-paysheets?startTime=$start&endTime=$end` **(use cleaning-logs to calculate payment for each HKP?)** **#56 TBD**
 
 =====
-1. `/housekeepers`
-   - `/clean`
-       - `/start` => `POST /cleaning-logs`	**#62**
-       - `/end`   => `PATCH /cleaning-logs`	**#20**
-       - `/report` => `GET /cleaning-logs?startTime=$start&endTime=$end&housekeeper=$HKP-user-id` **#32**
-   - `/stats`
-       - `/avg-room-rating` => `GET /housekeepers/:id` (stored avg-room-rating) **#33**
-       - `/lifetime-room-rating` => `GET /housekeepers/:id` (stored total-room-cleared) **#33**
+## NOTES for helping frontend
+1. For **#20** - ending a cleaning job: 
+   - update `cleaning-logs` (`PATCH /cleaning-logs/:id` for the `endTime` field) 
+   - update `room` (`PATCH /hotels/:id/floors/:id/rooms/:id` for the `underCleaning` and `lastCleanedTime` field)
 
-2. `/front-desk`
-   - `/check-in` => `PATCH /rooms/:id` (modify the `isOccupied` field)
-   - `/check-out` => `PATCH /cleaning-logs/:id` (& `PATCH /rooms/:id`?) **#25**
-   - `/report` => **not sure what's the corresponding function?**
+2. For **#21, #28** reporting issues with a room: 
+   - create `update-logs` (`POST /update-logs`)
+   - update `room` (`PATCH /hotels/:id/floors/:id/rooms/:id` for the `serviceStatus` field depends on the problem type, i.e. `update-logs` `category` field) 
+     - (1) Needs linens->Yellow rooms: `serviceStatus` become `housekeeper service`; 
+     - (2) anything else -> Grey rooms: `serviceStatus` become `serious service`)
+
+3. For **#33** getting housekeepers stats, there are two ways:
+   - if the stats is stored in the users object of HKP, then there will be cron jobs to update it, and `avg-room-rating`/`total-room-cleared` could all be accessed by `GET /users/:hkp_id` (stored avg-room-rating) 
+   - if the stats are not stored (before we implement the cron jobs), we can calculate the information from cleaning-logs, so frontend can `GET ?housekeeper=$HKP-user-id` to retrieve all the cleaning-logs for a HKP, and calculate the matrics **(we need to retrieve all the cleaning-logs for #33 anyway, so can just go for method2 for now)**
+
+4. For **#25** checkout:
+   - update `cleaning-logs`: `PATCH /cleaning-logs/:id` for the `rating`  
+   **To get the `cleaning-logs-id` for this room, query all the non-rating cleaning-logs and match the hotel-id & floor-id & room-id** 
+   - update rooms info: `PATCH /rooms/:id` for `occupiedBy` **(and maybe the `serviceStatus` should become `housekeeper service` for turnover? TBD)** 
+
+5. For **#40, #44**:
+   - `GET /hotels/:id/floors` or `GET /hotels/:id/floors/:id` for basic floor info
+   - `GET /cleaning-logs?startTime=$start&endTime=$end` or `GET /cleaning-logs?startTime=$start&endTime=$end&floor=$floor_id` for `#rooms cleaned today`
+   - `GET /update-logs?isResolved=false&startTime=$start` or `GET /update-logs?isResolved=false&startTime=$start&floor=$floor_id` for the room issues 
