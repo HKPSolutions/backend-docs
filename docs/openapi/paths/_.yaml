@@ -1,0 +1,9 @@
+get:
+  operationId: getBaseUrl
+  summary: Show API details
+  responses:
+    200:
+      description: "200 response"
+      content:
+        application/json:
+          example: { "message": "Welcome to HKP Solutions API!" }

@@ -1,0 +1,33 @@
+post:
+  operationId: calculatorAddNumbers
+  summary: Add two numbers
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - x
+            - y
+          properties:
+            x:
+              type: integer
+            y:
+              type: integer
+          example: { x: 1, y: 2 }
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - sum
+            properties:
+              sum:
+                type: integer
+            example: { sum: 3 }
+  security:
+    - bearerAuthorizer: []

@@ -20,13 +20,9 @@ jobs:
       run: npm install
       working-directory: app
     
-    - name: Compile OpenAPI spec
-      run: npx speccy ./main.yaml
+    - name: Setup OpenAPI spec
+      run: ./build.sh
       working-directory: docs/openapi
-    
-    - name: Move OpenAPI spec
-      run: cp ./docs/openapi/openapi.yaml ./app/public/openapi.yaml
-      working-directory: '.'
     
     - name: Build page
       run: npm run build

@@ -1,0 +1,47 @@
+post:
+  operationId: usersConfirmSignUp
+  summary: Confirm unconfirmed user that has already signed up.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - username
+            - password
+            - email
+            - phoneNumber
+            - confirmationCode
+            - employmentType
+            - profileInfo
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+            email:
+              type: string
+            phoneNumber:
+              type: string
+            confirmationCode:
+              type: integer
+            employmentType:
+              type: string
+            profileInfo:
+              $ref: "../../schemas/profileInfo.yaml"
+
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - authResult
+            properties:
+              authResult:
+                $ref: "../../schemas/authResult.yaml"
+              item:
+                $ref: "../../schemas/user.yaml"

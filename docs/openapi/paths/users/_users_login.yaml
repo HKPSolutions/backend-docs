@@ -1,0 +1,30 @@
+post:
+  operationId: usersLogin
+  summary: Logs-in user and returns tokens.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - username
+            - password
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+        example: { username: bob, email: bob@company.com }
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - authResult
+            properties:
+              authResult:
+                $ref: "../../schemas/authResult.yaml"

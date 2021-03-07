@@ -1,0 +1,32 @@
+post:
+  operationId: usersSignUpUnConfirmed
+  summary: Sign's up a user but does not confirm.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - username
+            - password
+            - email
+            - phoneNumber
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+            email:
+              type: string
+            phoneNumber:
+              type: string
+
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            example: {}
