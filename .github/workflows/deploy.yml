@@ -25,7 +25,7 @@ jobs:
       working-directory: docs/openapi
     
     - name: Move OpenAPI spec
-      run: cp ./docs/openapi.yaml ./app/public/openapi.yaml
+      run: cp ./docs/openapi/openapi.yaml ./app/public/openapi.yaml
       working-directory: '.'
     
     - name: Build page
