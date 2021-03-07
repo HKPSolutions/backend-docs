@@ -1,4 +1,0 @@
-jsonSchema: true
-verbose: 2
-resolve:
-  output: openapi.yaml

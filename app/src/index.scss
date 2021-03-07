@@ -1,7 +1,0 @@
-$colors: (
-  "base": #689afa
-);
-
-@function color($key){
-  @return map.get($colors, $key);
-}
