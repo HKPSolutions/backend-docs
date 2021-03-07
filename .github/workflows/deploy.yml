@@ -19,10 +19,6 @@ jobs:
     - name: Install Packages
       run: npm install
       working-directory: app
-
-    - name: Build page
-      run: npm run build
-      working-directory: app
     
     - name: Compile OpenAPI spec
       run: npx speccy ./main.yaml
@@ -31,6 +27,10 @@ jobs:
     - name: Move OpenAPI spec
       run: cp ./docs/openapi.yaml ./app/public/openapi.yaml
       working-directory: '.'
+    
+    - name: Build page
+      run: npm run build
+      working-directory: app
 
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
