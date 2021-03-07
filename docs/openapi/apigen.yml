@@ -1,0 +1,100 @@
+openapi: "3.0.1"
+info:
+  title: "beta-app-root-api"
+  version: "2021-03-06 21:14:09UTC"
+servers:
+- url: "https://ayggcgnrvf.execute-api.us-east-1.amazonaws.com/{basePath}"
+  variables:
+    basePath:
+      default: ""
+paths:
+  /:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /"
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:198354104435:function:root-dev-base/invocations"
+        connectionType: "INTERNET"
+        timeoutInMillis: 6500
+  /calculator/add:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /calculator/add"
+      security:
+      - bearerAuthorizer: []
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:198354104435:function:calculator-api-dev-add/invocations"
+        connectionType: "INTERNET"
+        timeoutInMillis: 6500
+  /users/confirm-sign-up:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /users/confirm-sign-up"
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:198354104435:function:users-api-dev-confirmSignUp/invocations"
+        connectionType: "INTERNET"
+        timeoutInMillis: 6500
+  /users/login:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /users/login"
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:198354104435:function:users-api-dev-login/invocations"
+        connectionType: "INTERNET"
+        timeoutInMillis: 6500
+  /users/sign-up:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /users/sign-up"
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:198354104435:function:users-api-dev-signUp/invocations"
+        connectionType: "INTERNET"
+        timeoutInMillis: 6500
+components:
+  securitySchemes:
+    bearerAuthorizer:
+      type: "oauth2"
+      flows: {}
+      x-amazon-apigateway-authorizer:
+        identitySource: "$request.header.Authorization"
+        jwtConfiguration:
+          audience:
+          - "5mlajipabtmfkgo43a59dk5jmj"
+          issuer: "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_EyzLhcBZd"
+        type: "jwt"
+x-amazon-apigateway-cors:
+  allowMethods:
+  - "GET"
+  - "OPTIONS"
+  allowHeaders:
+  - "authorization"
+  - "content-type"
+  - "x-amz-date"
+  - "x-amz-security-token"
+  - "x-amz-user-agent"
+  - "x-api-key"
+  maxAge: -42
+  allowCredentials: false
+  allowOrigins:
+  - "*"
+x-amazon-apigateway-importexport-version: "1.0"
