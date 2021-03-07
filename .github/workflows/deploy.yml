@@ -21,9 +21,9 @@ jobs:
       working-directory: app
     
     - name: Setup OpenAPI spec
-      run:
-        - npx speccy resolve ./main.yaml;
-        - mv ./openapi.yaml ../../app/public/openapi.yaml;
+      run: |
+        npx speccy resolve ./main.yaml;
+        mv ./openapi.yaml ../../app/public/openapi.yaml;
       working-directory: docs/openapi
     
     - name: Build page
