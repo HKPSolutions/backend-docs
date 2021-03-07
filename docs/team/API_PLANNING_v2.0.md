@@ -2,15 +2,15 @@
 Lays out general structure for API as well as what methods are needed and their respective functionalities.
 
 ## Endpoints
-**NOTE:**
+**NOTE:** 
    1. `PUT` needs to provide all the fields, `PATCH` only required the modified fields
    2. filters needed for query string should be checked again with the related screens
-   3. **For all the `GET /metrics` endpoint, we can also just implement the `GET` endpoint and let frontend do the calculation with raw data? TBD**
+   3. Authentication middleware for the routes? TBD
 
 ###
 1. `/users`
    - `POST` (create user) **#2-9**
-   - `GET ?employmentType=HKP` **#46**
+   - `GET ?employmentType=HKP&HIN=${HIN}` **#46**
    - `PATCH /:id` (update user profile) **#30, #51, #59**
    - `POST /login` **#1**
    - `POST /reset-password` (send a reset password mail)  **#65**  
@@ -18,21 +18,19 @@ Lays out general structure for API as well as what methods are needed and their 
 
 2. `/hotels`
    - `POST` (creates hotel - from company side) 
-   - `GET ?HIN=${HIN}` (searches for hotel from HIN) **#8, #6, #4**
 
-3. `/hotels/:id`
-   - `GET` or `GET /metrics (for all floors)` **#44 TBD**
+3. `/hotels/:id` (HIN is hotel_ID)
+   - `GET` **#8, #6, #4** 
+   - `GET /metrics (for all floors)` **#44 TBD**
    - `/floors`
       - `POST`  (creates a floor from room objects constructed on frontend) **#13, #14**
       - `GET` **#12, #18, #23**
       - `GET /metrics` **#37 TBD** 
    - `/floors/:id`
-      - `GET` **#19**
+      - `GET` **#19, #24***
       - `PUT` (updates floor object with rooms data) **#15, #16**
       - `DELETE` **#13**
       - `GET /metrics` (calculates metrics for a floor) **#40 TBD**
-      - `/rooms`
-        - `GET` (gets rooms on floor) **#19, #24**
       - `/rooms/:id`
         - `GET` **#62**
         - `PATCH` (modify the `occupiedBy` field for checkin, the `isDecommissioned` for decommission, `serviceStatus` for problem solved, `type` for editing room type) **#15, #41, #42, #43, #55**
