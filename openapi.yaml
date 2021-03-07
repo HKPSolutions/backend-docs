@@ -185,26 +185,8 @@ paths:
                       username:
                         type: string
                       profileInfo:
-                        type: object
-                        properties:
-                          dateOfBirth:
-                            type: string
-                          addressLineOne:
-                            type: string
-                          addressLineTwo:
-                            type: string
-                          city:
-                            type: string
-                          zip:
-                            type: string
-                          firstName:
-                            type: string
-                          lastName:
-                            type: string
-                          email:
-                            type: string
-                          phone:
-                            type: string
+                        $ref: "#/paths/~1users~1confirm-sign-up/post/requestBody/content/application~1j\
+                          son/schema/properties/profileInfo"
                       employmentType:
                         type: string
                       startDate:
