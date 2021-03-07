@@ -1,0 +1,14 @@
+type: object
+properties:
+  userId:
+    type: string
+  username:
+    type: string
+  profileInfo:
+    $ref: "./profileInfo.yaml"
+  employmentType:
+    type: string
+  startDate:
+    type: string
+  endDate:
+    type: string
