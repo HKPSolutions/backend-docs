@@ -25,37 +25,39 @@ Used for all user data storage (except the password which is in Cognito).
 - employment type (HKP, FDR, MNG)
 - startDate
 - endDate
-- **HIN or hotel id? (each user only belongs to one hotel? TBD)**
+- **HIN (each user only belongs to one hotel)**
 - **avg-room-rating (HKP only, TBD)** **#33, #57**
 - **total-rooms-cleared (HKP only, TBD)** **#33, #57**
 - **Average room clean time (HKP only, TBD)** **#57**
 
 ### Hotels
-- manager user-id's list **(#8, #6, #4, how are we doing the user authentication? TBD)**
-- hotel object id (for database side)
-- hotel info
-   - hotel identification number (HIN) -> index
+- employees (list of `Cognito user ID` or `username`? **TBD**, **#8, #6, #4**) 
+- HIN (hotel identification number) -> Primary Key
+- hotelInfo
    - address
    - name
-- floor layout  
-   - (array of floor objects (maps))
-    - floor object: 
-       - floor-id 
-       - array of room objects (maps)  
-        - room object:  
-           - room-id  
-           - room-name/number  
-           - isDecommissioned: (default=false)
-           - occupiedBy: guest_name (default=None) **#26**
-           - ~~**cleanStatus (needs cleaning, current clean, finished cleaning)**~~
-           - **lastCleanedTime: (default=None)**
-           - **underCleaning: (default=false)**  
-            **NOTE: finished cleaning status is valid for only 12 hours, see #20. So, instead of having `cleanStatus`, the cleanStatus should be derived from `lastCleanedTime` + `underCleaning:bool`, TBD**
-           - serviceStatus (none needed, housekeeper service, serious service): (default=none needed)
-           - type (king, double, suite, ADA): **(default=?? TBD)**
-           - **rate (can be custom value #55b TBD)**  
-              -> **Q: Stayover or Turnover depends on wether the room is occupied or not? should it be predefined?**
-           - problemDescription (optional) **#41 #43**
+- floors (map of floor objects): {
+   - floorId: {
+      - floorName 
+      - rooms (map of room objects): {
+         - roomId: {
+            - roomName  
+            - isDecommissioned: (default=false)
+            - occupiedBy: guest_name (default=None) **#26**
+            - **cleanStatus (needs cleaning, current clean, finished cleaning)**
+            - **NOTE: Instead of "changing the status" exactly after 12 hours of cleaning, we will have a cron job to switch the cleanStatus every night. TBD**
+            - ~~**lastCleanedTime: (default=None)**~~
+            - ~~**underCleaning: (default=false)**~~
+            - ~~**NOTE: finished cleaning status is valid for only 12 hours, see #20. So, instead of having `cleanStatus`, the cleanStatus should be derived from `lastCleanedTime` + `underCleaning:bool`, TBD**~~
+            - serviceStatus (none needed, housekeeper service, serious service): (default=none needed)
+            - type (king, double, suite, ADA): **(default=none)**
+            - **rate (can be custom value #55b TBD)**  
+               -> **Q: Stayover or Turnover depends on wether the room is occupied or not? should it be predefined?**
+            - problemDescription (optional) **#41 #43**
+         }
+      }  
+   }
+}
 
 ### Cleaning Logs
 - housekeeper: user-id
