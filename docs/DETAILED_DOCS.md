@@ -16,11 +16,26 @@ Lays out detailed descriptions for API and methods
    - `POST /reset-password` (send a reset password mail) 
 
 2. `/hotels`
-   - `POST` (creates hotel - from company side) 
-   - `GET ?HIN=${HIN}` (searches for hotel from HIN) 
+   - `POST`
+  	 - Creates hotel - from company side
+  	 - Expected Payload:	 
+		- {
+   			 name,
+   			 address
+  		   }
+  	 - Success: { status: true, "hotel": newHotel }
+  	 - Error: false status, possibly 'Error: missing required input data'
+
+		   
+   - `GET ?HIN=${HIN}` 
+  	 - Searches for hotel from HIN
+   	- Success: { status: true, hotel }
+   	- Error: false status, possibly 'missing HIN from the query string' OR 'Failed to get hotel by HIN'
 
 3. `/hotels/:id`
-   - `GET` or `GET /metrics (for all floors)` 
+   - `GET /hotels/:ID`
+  	 - Success: { status: true, hotel }
+  	 - Failure: false status, possibly 'missing ID from the path parameters' OR `Failed to get hotel by ID=${ID}` 
    - `/floors`
       - `POST /hotels/:hotel_ID/floors` 
      	 - Creates a floor from room objects constructed on frontend) 
@@ -36,16 +51,16 @@ Lays out detailed descriptions for API and methods
 			 }
 			 ...
 		}
-     	 - Success: will return { "floor_ID": floor ID, "rooms": list of rooms on the floor }
-     	 - Error: 'Error: missing required input data' OR `Error: floor with ID=${floor_ID} already exists.`		
+     	 - Success: { status: true, data: {"floor_ID": floor ID, "rooms": list of rooms on the floor} }
+     	 - Error: false status, possibly 'Error: missing required input data' OR `Error: floor with ID=${floor_ID} already exists.`		
       - `GET /hotels/:hotel_ID/floors` 
         - Success: will return floors of the hotel
       	- Error: 'missing hotel_ID from the path parameters' OR `Failed to get floors by hotel_ID=${hotel_ID}` 
       - `GET /metrics` 
    - `/floors/:id`
       - `GET /hotels/:hotel_ID/floors/:floor_ID`
-        - Success: will return specific floor with the ID specified in the parameter
-      	- Error: 'missing hotel_ID or floor_ID from the path parameters'  OR `Failed to get floors by hotel_ID=${hotel_ID} and floor_ID=${floor_ID}` 
+        - Success: { status:true, floor: appropriate floor name}
+      	- Error: false status, possibly 'missing hotel_ID or floor_ID from the path parameters'  OR `Failed to get floors by hotel_ID=${hotel_ID} OR floor_ID=${floor_ID}`
       - `PUT` (updates floor object with rooms data) 
       - `DELETE`
       - `GET /metrics` (calculates metrics for a floor) 
