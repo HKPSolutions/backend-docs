@@ -1,5 +1,11 @@
+@use 'sass:map';
+
 $colors: (
-  "base": #689afa
+  "dark-2": #172A3A,
+  "dark-1": #042C77,
+  "base": #689afa,
+  "accent": #F45B69,
+  "light-2": #FFFFFF
 );
 
 @function color($key){
