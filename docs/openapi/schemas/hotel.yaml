@@ -1,0 +1,14 @@
+type: object
+properties:
+  HIN:
+    type: string
+  hotel_info:
+    $ref: "./hotelInfo.yaml"
+  floors:
+    type: object
+    additionalProperties:
+      $ref: "floor.yaml"
+required:
+  - HIN
+  - hotel_info
+  - floors
