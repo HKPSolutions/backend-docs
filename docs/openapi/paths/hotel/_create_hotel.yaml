@@ -1,0 +1,49 @@
+post:
+  operationId: createHotel
+  summary: Creates a new hotel.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          properties:
+            HIN:
+              type: string
+            name:
+              type: string
+            address:
+              type: string
+          required:
+            - HIN
+            - name
+            - address
+          example:
+            HIN: 123456
+            name: Marriot
+            address: 123 Generic Street, 12345, New York NY, USA
+  responses:
+    '200':
+      description: Returns the newly created hotel.
+      content:
+        application/json:
+          schema:
+            properties:
+              new_hotel:
+                type: object
+                properties:
+                  HIN:
+                    type: string
+                  name:
+                    type: string
+                  address:
+                    type: string
+                required:
+                  - HIN
+                  - name
+                  - address
+                example:
+                  HIN: 123456
+                  name: Marriot
+                  address: 123 Generic Street, 12345, New York NY, USA
+            required:
+              - new_hotel
