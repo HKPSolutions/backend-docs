@@ -29,7 +29,7 @@ post:
                   $ref: "../../schemas/floor.yaml"
 get:
   operationId: getFloors
-  summary: Get all floor objects of a hotel.
+  summary: Get all floor of a hotel.
   parameters:
     - in: path
       name: HIN
