@@ -16,7 +16,7 @@ get:
       schema:
         type: string
       description: id unique to the floor
-  response:
+  responses:
     "200":
       description: Returns the floor with matching HIN and floor_id
       content:
