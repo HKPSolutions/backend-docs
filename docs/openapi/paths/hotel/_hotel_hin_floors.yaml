@@ -16,7 +16,7 @@ post:
       application/json:
         schema:
           $ref: "../../schemas/floor.yaml"
-  response:
+  responses:
     "200":
       description: Returns the newly created floor.
       content:
