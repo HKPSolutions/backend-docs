@@ -18,11 +18,11 @@ post:
             - name
             - address
           example:
-            HIN: 123456
-            name: Marriot
-            address: 123 Generic Street, 12345, New York NY, USA
+            HIN: "123456"
+            name: "Marriot"
+            address: "123 Generic Street, 12345, New York NY, USA"
   responses:
-    '200':
+    "200":
       description: Returns the newly created hotel.
       content:
         application/json:
@@ -42,8 +42,8 @@ post:
                   - name
                   - address
                 example:
-                  HIN: 123456
-                  name: Marriot
-                  address: 123 Generic Street, 12345, New York NY, USA
+                  HIN: "123456"
+                  name: "Marriot"
+                  address: "123 Generic Street, 12345, New York NY, USA"
             required:
               - new_hotel

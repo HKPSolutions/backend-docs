@@ -9,7 +9,7 @@ get:
         type: string
       description: six digit pin number, unique to each hotel
       example:
-        HIN: '000007'
+        "000007"
   responses:
     "200":
       description: Returns the hotel with matching HIN.

@@ -9,7 +9,7 @@ post:
       type: string
     description: six digit pin number, unique to each hotel
     example:
-      HIN: '000007'
+      "000007"
   requestBody:
     required: true
     content:
@@ -27,3 +27,29 @@ post:
                 type: object
                 additionalProperties:
                   $ref: "../../schemas/floor.yaml"
+get:
+  operationId: getFloors
+  summary: Get all floor objects of a hotel.
+  parameters:
+    - in: path
+      name: HIN
+      required: true
+      schema:
+        type: string
+      description: six digit pin number, unique to each hotel
+      example:
+        "000007"
+  responses:
+    "200":
+      description: Returns the hotel with matching HIN.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - floors
+            properties:
+              floors:
+                additionalProperties:
+                  $ref: "../../schemas/floor.yaml"
+

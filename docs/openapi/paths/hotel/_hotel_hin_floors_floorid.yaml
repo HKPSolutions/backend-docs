@@ -1,0 +1,29 @@
+get:
+  operationId: getFloor
+  summary: Get a floor in a hotel.
+  parameters:
+    - in: path
+      name: HIN
+      required: true
+      schema:
+        type: string
+      description: six digit pin number
+      example:
+        "000007"
+    - in: path
+      name: floor_id
+      required: true
+      schema:
+        type: string
+      description: id unique to the floor
+  response:
+    "200":
+      description: Returns the floor with matching HIN and floor_id
+      content:
+        applicatoin/json:
+          schema:
+            type: object
+            required:
+              -floor
+            additionalProperties:
+              $ref: "../../schemas/floor.yaml"
