@@ -27,3 +27,61 @@ get:
               -floor
             additionalProperties:
               $ref: "../../schemas/floor.yaml"
+patch:
+  parameters:
+  - in: path
+    name: HIN
+    required: true
+    schema:
+      type: string
+    description: six digit pin number
+    example:
+      "000007"
+  - in: path
+    name: floor_id
+    required: true
+    schema:
+      type: string
+    description: id unique to the floor
+  operationId: updateFloor
+  summary: Update the floor. All the rooms will be overwritten to default values and will be assigned new roomId.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/floor.yaml"
+  responses:
+    "200":
+      content:
+        application/json:
+          required:
+            - floors
+          schema:
+            type: object
+            additionalProperties:
+              $ref: "../../schemas/floor.yaml"
+delete:
+  parameters:
+  - in: path
+    name: HIN
+    required: true
+    schema:
+      type: string
+    description: six digit pin number
+    example:
+      "000007"
+  - in: path
+    name: floor_id
+    required: true
+    schema:
+      type: string
+    description: id unique to the floor
+  operationId: deleteFloor
+  summary: Remove the floor from the hotel.
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            type: object
