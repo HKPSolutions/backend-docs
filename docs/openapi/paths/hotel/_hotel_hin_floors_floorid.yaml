@@ -56,10 +56,10 @@ patch:
       content:
         application/json:
           required:
-            - floors
+            - floor
           schema:
             type: object
-            additionalProperties:
+            properties:
               $ref: "../../schemas/floor.yaml"
 delete:
   parameters:
