@@ -1,0 +1,4 @@
+delete:
+  operationId: deleteRoom
+  summary: Delete the room object.
+

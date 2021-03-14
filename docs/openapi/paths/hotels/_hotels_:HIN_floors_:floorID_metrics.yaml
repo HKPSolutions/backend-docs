@@ -1,0 +1,17 @@
+get:
+  operationId: getFloorMetrics
+  summary: Get metrics for a specific floor.
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - metrics
+            properties:
+              metrics:
+                type: object
+                properties:
+                  $ref: "../../schemas/metrics.yaml"

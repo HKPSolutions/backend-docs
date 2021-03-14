@@ -1,0 +1,42 @@
+patch:
+  operationId: updateRoom
+  summary: Update a specific room object.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - room_name
+            - occupied_by
+            - is_decommissioned
+            - service_status
+            - type
+          properties:
+            room_name:
+              type: string
+            occupied_by:
+              type: string
+            is_decommissioned:
+              type: boolean
+            service_status:
+              type: string
+            type:
+              type: boolean
+        example: { room_name: 2A, occupied_by:  John Smith, is_decommissioned: false, service_status: Needs cleaning, type: KING }
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - room
+            properties:
+              room:
+                type: object
+                properties:
+                  $ref: "../../schemas/room.yaml"
+
