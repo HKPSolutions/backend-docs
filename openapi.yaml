@@ -61,7 +61,10 @@ paths:
   /users/sign-up:
     post:
       operationId: usersSignUpUnConfirmed
-      summary: Sign's up a user but does not confirm.
+      summary: Sign's up an user, but doesn't confirm them. To confirm an user, a
+        confirmation text will be sent the the phone number. The phone number
+        should be in international phone number format -- e.g.; an US phone
+        number (202)456-1111 would be "+12024561111".
       requestBody:
         required: true
         content:
@@ -93,7 +96,9 @@ paths:
   /users/confirm-sign-up:
     post:
       operationId: usersConfirmSignUp
-      summary: Confirm unconfirmed user that has already signed up.
+      summary: Confirm unconfirmed user that has already signed up. Use the
+        verification code sent to your phone number in the user sign up stage as
+        the confirmation code. Confirmation codes should consist of six digits.
       requestBody:
         required: true
         content:
@@ -227,6 +232,265 @@ paths:
                   authResult:
                     $ref: "#/paths/~1users~1confirm-sign-up/post/responses/200/content/application~\
                       1json/schema/properties/authResult"
+  /hotel:
+    post:
+      operationId: createHotel
+      summary: Creates a new hotel.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                HIN:
+                  type: string
+                name:
+                  type: string
+                address:
+                  type: string
+              required:
+                - HIN
+                - name
+                - address
+              example:
+                HIN: "123456"
+                name: Marriot
+                address: 123 Generic Street, 12345, New York NY, USA
+      responses:
+        "200":
+          description: Returns the newly created hotel.
+          content:
+            application/json:
+              schema:
+                properties:
+                  new_hotel:
+                    type: object
+                    properties:
+                      HIN:
+                        type: string
+                      name:
+                        type: string
+                      address:
+                        type: string
+                    required:
+                      - HIN
+                      - name
+                      - address
+                    example:
+                      HIN: "123456"
+                      name: Marriot
+                      address: 123 Generic Street, 12345, New York NY, USA
+                required:
+                  - new_hotel
+  "/hotel/{HIN}":
+    get:
+      operationId: getHotel
+      summary: Find hotel item by Hotel Identification Number (HIN).
+      parameters:
+        - in: path
+          name: HIN
+          required: true
+          schema:
+            type: string
+          description: six digit pin number, unique to each hotel
+          example: "000007"
+      responses:
+        "200":
+          description: Returns the hotel with matching HIN.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - new_hotel
+                properties:
+                  new_hotel:
+                    type: object
+                    properties:
+                      HIN:
+                        type: string
+                      hotel_info:
+                        type: object
+                        properties:
+                          address:
+                            type: string
+                          name:
+                            type: string
+                        required:
+                          - address
+                          - name
+                      floors:
+                        type: object
+                        additionalProperties:
+                          $ref: "#/paths/~1hotel~1%7BHIN%7D~1floors/post/requestBody/content/application~\
+                            1json/schema"
+                    required:
+                      - HIN
+                      - hotel_info
+                      - floors
+  "/hotel/{HIN}/floors":
+    post:
+      operationId: createFloor
+      summary: Creates a new floor in the hotel with matching HIN.
+      parameters:
+        - in: path
+          name: HIN
+          required: true
+          schema:
+            type: string
+          description: six digit pin number, unique to each hotel
+          example: "000007"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                floor_name:
+                  type: string
+                rooms:
+                  type: object
+                  additionalProperties:
+                    type: object
+                    properties:
+                      room_name:
+                        type: string
+                      type:
+                        type: string
+                      is_decommissioned:
+                        type: string
+                      occupied_by:
+                        type: string
+                      clean_status:
+                        type: string
+                      service_status:
+                        type: string
+      responses:
+        "200":
+          description: Returns the newly created floor.
+          content:
+            application/json:
+              schema:
+                properties:
+                  floor:
+                    type: object
+                    additionalProperties:
+                      $ref: "#/paths/~1hotel~1%7BHIN%7D~1floors/post/requestBody/content/application~\
+                        1json/schema"
+    get:
+      operationId: getFloors
+      summary: Get all floor of a hotel.
+      parameters:
+        - in: path
+          name: HIN
+          required: true
+          schema:
+            type: string
+          description: six digit pin number, unique to each hotel
+          example: "000007"
+      responses:
+        "200":
+          description: Returns the hotel with matching HIN.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - floors
+                properties:
+                  floors:
+                    additionalProperties:
+                      $ref: "#/paths/~1hotel~1%7BHIN%7D~1floors/post/requestBody/content/application~\
+                        1json/schema"
+  "/hotel/{HIN}/floors/{floor_id}":
+    get:
+      operationId: getFloor
+      summary: Get a floor in a hotel.
+      parameters:
+        - in: path
+          name: HIN
+          required: true
+          schema:
+            type: string
+          description: six digit pin number
+          example: "000007"
+        - in: path
+          name: floor_id
+          required: true
+          schema:
+            type: string
+          description: id unique to the floor
+      responses:
+        "200":
+          description: Returns the floor with matching HIN and floor_id
+          content:
+            applicatoin/json:
+              schema:
+                type: object
+                required: -floor
+                additionalProperties:
+                  $ref: "#/paths/~1hotel~1%7BHIN%7D~1floors/post/requestBody/content/application~\
+                    1json/schema"
+    patch:
+      parameters:
+        - in: path
+          name: HIN
+          required: true
+          schema:
+            type: string
+          description: six digit pin number
+          example: "000007"
+        - in: path
+          name: floor_id
+          required: true
+          schema:
+            type: string
+          description: id unique to the floor
+      operationId: updateFloor
+      summary: Update the floor. All the rooms will be overwritten to default values
+        and will be assigned new roomId.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/paths/~1hotel~1%7BHIN%7D~1floors/post/requestBody/content/application~\
+                1json/schema"
+      responses:
+        "200":
+          content:
+            application/json:
+              required:
+                - floor
+              schema:
+                type: object
+                properties:
+                  $ref: "#/paths/~1hotel~1%7BHIN%7D~1floors/post/requestBody/content/application~\
+                    1json/schema"
+    delete:
+      parameters:
+        - in: path
+          name: HIN
+          required: true
+          schema:
+            type: string
+          description: six digit pin number
+          example: "000007"
+        - in: path
+          name: floor_id
+          required: true
+          schema:
+            type: string
+          description: id unique to the floor
+      operationId: deleteFloor
+      summary: Remove the floor from the hotel.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
 components:
   securitySchemes:
     bearerAuthorizer:
