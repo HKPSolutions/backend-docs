@@ -1,0 +1,24 @@
+get:
+  operationId: getHotel
+  summary: Find hotel item by Hotel Identification Number (HIN).
+  parameters:
+    - in: path
+      name: HIN
+      required: true
+      schema:
+        type: string
+      description: six digit pin number, unique to each hotel
+      example:
+        "000007"
+  responses:
+    "200":
+      description: Returns the hotel with matching HIN.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - new_hotel
+            properties:
+              new_hotel:
+                $ref: "../../schemas/hotel.yaml"

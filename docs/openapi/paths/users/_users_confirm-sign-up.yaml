@@ -1,6 +1,6 @@
 post:
   operationId: usersConfirmSignUp
-  summary: Confirm unconfirmed user that has already signed up.
+  summary: Confirm unconfirmed user that has already signed up. Use the verification code sent to your phone number in the user sign up stage as the confirmation code. Confirmation codes should consist of six digits.
   requestBody:
     required: true
     content:
