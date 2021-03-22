@@ -27,17 +27,17 @@ paths:
   "/users/login":
     $ref: "./paths/users/_users_login.yaml"
 
-  "/hotel":
-    $ref: "./paths/hotel/_hotel.yaml"
+  "/hotels":
+    $ref: "./paths/hotels/_hotels.yaml"
 
-  "/hotel/{HIN}":
-    $ref: "./paths/hotel/_hotel_hin.yaml"
+  "/hotels/{HIN}":
+    $ref: "./paths/hotels/_hotels_hin.yaml"
 
-  "/hotel/{HIN}/floors":   
-    $ref: "./paths/hotel/_hotel_hin_floors.yaml"
+  "/hotels/{HIN}/floors":   
+    $ref: "./paths/hotels/_hotels_hin_floors.yaml"
 
-  "/hotel/{HIN}/floors/{floor_id}":
-    $ref: "./paths/hotel/_hotel_hin_floors_floorid.yaml"
+  "/hotels/{HIN}/floors/{floor_id}":
+    $ref: "./paths/hotels/_hotels_hin_floors_floorid.yaml"
 
 components:
   securitySchemes:
