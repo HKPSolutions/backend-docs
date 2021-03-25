@@ -360,6 +360,50 @@ paths:
                   hotel:
                     $ref: "#/paths/~1hotels/post/responses/201/content/application~1json/schema/pro\
                       perties/new_hotel"
+  "/hotels/{HIN}/metrics":
+    get:
+      operationId: getHotelMetrics
+      summary: Get metrics for all floors (of a hotel) in aggregate.
+      parameters:
+        - in: path
+          name: HIN
+          required: true
+          schema:
+            type: string
+          description: six digit pin number, unique to each hotel
+          example: "123456"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - metrics
+                properties:
+                  metrics:
+                    type: object
+                    properties:
+                      cleaned_today:
+                        type: integer
+                      in_progress:
+                        type: integer
+                      in_queue:
+                        type: integer
+                      no_cleaning_needed:
+                        type: integer
+                      unoccupied:
+                        type: integer
+                      decommissioned:
+                        type: integer
+                    example:
+                      cleaned_today: 2
+                      in_progress: 0
+                      in_queue: 0
+                      no_cleaning_needed: 2
+                      unoccupied: 1
+                      decommissioned: 1
   "/hotels/{HIN}/floors":
     post:
       operationId: createFloor
@@ -414,40 +458,9 @@ paths:
                         rooms:
                           type: object
                           additionalProperties:
-                            type: object
-                            properties:
-                              room_name:
-                                type: string
-                              type:
-                                type: string
-                                enum:
-                                  - KING
-                                  - DOUBLE
-                                  - SUITE
-                                  - ADA
-                                  - null
-                              rate:
-                                type: number
-                              is_decommissioned:
-                                type: boolean
-                              occupied_by:
-                                type: string
-                              clean_status:
-                                type: string
-                                nullable: true
-                                enum:
-                                  - needs_cleaning
-                                  - current_clean
-                                  - finished_cleaning
-                                  - null
-                              service_status:
-                                type: string
-                                nullable: true
-                                enum:
-                                  - none_needed
-                                  - housekeeper_service
-                                  - serious_service
-                                  - null
+                            $ref: "#/paths/~1hotels~1%7BHIN%7D~1floors~1%7Bfloor_id%7D~1rooms~1%7Broom_id%7\
+                              D/get/responses/200/content/application~1json/sch\
+                              ema/properties/room/additionalProperties"
                 example:
                   floor:
                     0d2c1592-8ac7-11eb-896d-fd2829b676c6(#floor_id):
@@ -526,6 +539,52 @@ paths:
                           type: SUITE
                           occupied_by: null
                           clean_status: finished_cleaning
+  "/hotels/{HIN}/floors/metrics":
+    get:
+      operationId: getFloorsMetrics
+      summary: Get metrics for each of all the floors.
+      parameters:
+        - in: path
+          name: HIN
+          required: true
+          schema:
+            type: string
+          description: six digit pin number, unique to each hotel
+          example: "123456"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - metrics
+                properties:
+                  metrics:
+                    additionalProperties:
+                      type: object
+                      properties:
+                        room_counts:
+                          type: integer
+                        cleared:
+                          type: integer
+                        have_issues:
+                          type: integer
+                        decommissioned:
+                          type: integer
+                example:
+                  metrics:
+                    1F:
+                      room_counts: 2
+                      cleared: 2
+                      have_issues: 0
+                      decommissioned: 0
+                    2F:
+                      room_counts: 1
+                      cleared: 1
+                      have_issues: 0
+                      decommissioned: 0
   "/hotels/{HIN}/floors/{floor_id}":
     get:
       operationId: getFloor
@@ -676,6 +735,213 @@ paths:
       responses:
         "204":
           description: The resource was deleted successfully.
+  "/hotels/{HIN}/floors/{floor_id}/metrics":
+    get:
+      operationId: getFloorMetrics
+      summary: Get metrics for a specific floor.
+      parameters:
+        - in: path
+          name: HIN
+          required: true
+          schema:
+            type: string
+          description: six digit pin number
+          example: "123456"
+        - in: path
+          name: floor_id
+          required: true
+          schema:
+            type: string
+          description: id unique to the floor
+          example: 0e3d38a2-8ae1-11eb-a90d-e1e56f4ad85d
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - metrics
+                properties:
+                  metrics:
+                    $ref: "#/paths/~1hotels~1%7BHIN%7D~1metrics/get/responses/200/content/applicati\
+                      on~1json/schema/properties/metrics"
+  "/hotels/{HIN}/floors/{floor_id}/rooms/{room_id}":
+    get:
+      operationId: getRoom
+      summary: Get a specific room object.
+      parameters:
+        - in: path
+          name: HIN
+          required: true
+          schema:
+            type: string
+          description: six digit pin number
+          example: "123456"
+        - in: path
+          name: floor_id
+          required: true
+          schema:
+            type: string
+          description: id unique to the floor
+          example: 0e3d38a2-8ae1-11eb-a90d-e1e56f4ad85d
+        - in: path
+          name: room_id
+          required: true
+          schema:
+            type: string
+          description: id unique to the room
+          example: 0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - room
+                properties:
+                  room:
+                    additionalProperties:
+                      type: object
+                      properties:
+                        room_name:
+                          type: string
+                        type:
+                          type: string
+                          enum:
+                            - KING
+                            - DOUBLE
+                            - SUITE
+                            - ADA
+                            - null
+                        rate:
+                          type: number
+                        is_decommissioned:
+                          type: boolean
+                        occupied_by:
+                          type: string
+                        clean_status:
+                          type: string
+                          nullable: true
+                          enum:
+                            - needs_cleaning
+                            - current_clean
+                            - finished_cleaning
+                            - null
+                        service_status:
+                          type: string
+                          nullable: true
+                          enum:
+                            - none_needed
+                            - housekeeper_service
+                            - serious_service
+                            - null
+                      example:
+                        room_name: "123"
+                        occupied_by: John Doe
+                        is_decommissioned: true
+                        clean_status: needs_cleaning
+                        service_status: need_cleaning
+                        type: SUITE
+                example:
+                  room:
+                    0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d:
+                      room_name: "101"
+                      rate: 10
+                      service_status: none_needed
+                      is_decommissioned: false
+                      type: KING
+                      occupied_by: null
+                      clean_status: finished_cleaning
+    patch:
+      operationId: updateRoom
+      summary: Update a specific room object.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/paths/~1hotels~1%7BHIN%7D~1floors~1%7Bfloor_id%7D~1rooms~1%7Broom_id%7\
+                D/get/responses/200/content/application~1json/schema/properties\
+                /room/additionalProperties"
+      parameters:
+        - in: path
+          name: HIN
+          required: true
+          schema:
+            type: string
+          description: six digit pin number
+          example: "123456"
+        - in: path
+          name: floor_id
+          required: true
+          schema:
+            type: string
+          description: id unique to the floor
+          example: 0e3d38a2-8ae1-11eb-a90d-e1e56f4ad85d
+        - in: path
+          name: room_id
+          required: true
+          schema:
+            type: string
+          description: id unique to the room
+          example: 0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - room
+                properties:
+                  room:
+                    type: object
+                    additionalProperties:
+                      $ref: "#/paths/~1hotels~1%7BHIN%7D~1floors~1%7Bfloor_id%7D~1rooms~1%7Broom_id%7\
+                        D/get/responses/200/content/application~1json/schema/pr\
+                        operties/room/additionalProperties"
+                example:
+                  room:
+                    0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d:
+                      room_name: "123"
+                      occupied_by: John Doe
+                      is_decommissioned: true
+                      clean_status: needs_cleaning
+                      service_status: need_cleaning
+                      type: SUITE
+    delete:
+      operationId: deleteRoom
+      summary: Delete the room object.
+      parameters:
+        - in: path
+          name: HIN
+          required: true
+          schema:
+            type: string
+          description: six digit pin number
+          example: "123456"
+        - in: path
+          name: floor_id
+          required: true
+          schema:
+            type: string
+          description: id unique to the floor
+          example: 0e3d38a2-8ae1-11eb-a90d-e1e56f4ad85d
+        - in: path
+          name: room_id
+          required: true
+          schema:
+            type: string
+          description: id unique to the room
+          example: 0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d
+      responses:
+        "204":
+          description: No Content
 components:
   securitySchemes:
     bearerAuthorizer:

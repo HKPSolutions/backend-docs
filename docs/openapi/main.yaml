@@ -33,11 +33,23 @@ paths:
   "/hotels/{HIN}":
     $ref: "./paths/hotels/_hotels_hin.yaml"
 
+  "/hotels/{HIN}/metrics":
+    $ref: "./paths/hotels/_hotels_hin_metrics.yaml"
+
   "/hotels/{HIN}/floors":   
     $ref: "./paths/hotels/_hotels_hin_floors.yaml"
 
+  "/hotels/{HIN}/floors/metrics":   
+    $ref: "./paths/hotels/_hotels_hin_floors_metrics.yaml"
+
   "/hotels/{HIN}/floors/{floor_id}":
     $ref: "./paths/hotels/_hotels_hin_floors_floorid.yaml"
+
+  "/hotels/{HIN}/floors/{floor_id}/metrics":
+    $ref: "./paths/hotels/_hotels_hin_floors_floorid_metrics.yaml"
+
+  "/hotels/{HIN}/floors/{floor_id}/rooms/{room_id}":
+    $ref: "./paths/hotels/_hotels_hin_floors_floorid_rooms_roomid.yaml"
 
 components:
   securitySchemes:

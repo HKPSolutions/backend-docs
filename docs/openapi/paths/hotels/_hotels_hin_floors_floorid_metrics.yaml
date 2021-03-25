@@ -1,0 +1,32 @@
+get:
+  operationId: getFloorMetrics
+  summary: Get metrics for a specific floor.
+  parameters:
+    - in: path
+      name: HIN
+      required: true
+      schema:
+        type: string
+      description: six digit pin number
+      example:
+        "123456"
+    - in: path
+      name: floor_id
+      required: true
+      schema:
+        type: string
+      description: id unique to the floor
+      example:
+        "0e3d38a2-8ae1-11eb-a90d-e1e56f4ad85d"
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - metrics
+            properties:
+              metrics:
+                $ref: "../../schemas/hotels/metrics.yaml" 

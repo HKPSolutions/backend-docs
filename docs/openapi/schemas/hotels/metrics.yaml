@@ -12,6 +12,7 @@ properties:
     type: integer
   decommissioned:
     type: integer 
+
 example: 
   { 
     cleaned_today: 2,  
