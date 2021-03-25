@@ -27,6 +27,18 @@ paths:
   "/users/login":
     $ref: "./paths/users/_users_login.yaml"
 
+  "/hotels":
+    $ref: "./paths/hotels/_hotels.yaml"
+
+  "/hotels/{HIN}":
+    $ref: "./paths/hotels/_hotels_hin.yaml"
+
+  "/hotels/{HIN}/floors":   
+    $ref: "./paths/hotels/_hotels_hin_floors.yaml"
+
+  "/hotels/{HIN}/floors/{floor_id}":
+    $ref: "./paths/hotels/_hotels_hin_floors_floorid.yaml"
+
 components:
   securitySchemes:
     bearerAuthorizer:

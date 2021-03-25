@@ -1,0 +1,66 @@
+type: object
+properties:
+  HIN:
+    type: string
+  hotel_info:
+    $ref: "./hotelInfo.yaml"
+  floors:
+    type: object
+    additionalProperties:
+      $ref: "./floor.yaml"
+  # employees:
+  #   type: array # <-TBD
+  #   items:
+  #     type: string    
+required:
+  - HIN
+  - hotel_info
+  - floors
+example:
+  {
+    "HIN": "123456",
+    "hotel_info": {
+        "name": "Marriot",
+        "address": "123 Generic Street, 12345, New York NY, USA"
+    },
+    "floors": {
+      "66ef0282-8226-11eb-9d5d-4fe6df708afd(#floor_id)": {
+        "floor_name": "2F",
+        "rooms": {
+          "66ef0281-8226-11eb-9d5d-4fe6df708afd(#room_id)": {
+            "room_name": "201",
+            "rate": 10,
+            "service_status": "none_needed",
+            "is_decommissioned": false,
+            "type": "SUITE",
+            "occupied_by": null,
+            "clean_status": "finished_cleaning"
+          }
+        }
+      },
+      "ec4110a1-8225-11eb-9d5d-4fe6df708afd(#floor_id)": {
+        "floor_name": "1F",
+        "rooms": {
+          "13a09df1-822b-11eb-b3e6-cb27df13eb4e(#room_id)": {
+            "room_name": "102",
+            "rate": 10,
+            "service_status": "none_needed",
+            "is_decommissioned": false,
+            "type": "KING",
+            "occupied_by": null,
+            "clean_status": "finished_cleaning"
+          },
+          "13a09df0-822b-11eb-b3e6-cb27df13eb4e(#room_id)": {
+            "room_name": "101",
+            "rate": 10,
+            "service_status": "none_needed",
+            "is_decommissioned": false,
+            "type": "SUITE",
+            "occupied_by": null,
+            "clean_status": "finished_cleaning"
+          }
+        }
+      }
+    },
+    # employees: []
+  }

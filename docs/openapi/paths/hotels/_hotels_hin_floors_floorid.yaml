@@ -1,0 +1,174 @@
+get:
+  operationId: getFloor
+  summary: Get a floor in a hotel.
+  parameters:
+    - in: path
+      name: HIN
+      required: true
+      schema:
+        type: string
+      description: six digit pin number
+      example:
+        "123456"
+    - in: path
+      name: floor_id
+      required: true
+      schema:
+        type: string
+      description: id unique to the floor
+      example:
+        "0d2c1592-8ac7-11eb-896d-fd2829b676c6"
+  responses:
+    "200":
+      description: Returns the floor with matching HIN and floor_id
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              floor:
+                type: object
+                additionalProperties:
+                  $ref: "../../schemas/hotels/floor.yaml"
+            required:
+              -floor
+            example:
+              {
+                "floor": {
+                  "0d2c1592-8ac7-11eb-896d-fd2829b676c6(#floor_id)": {
+                    "floor_name": "1F",
+                    "rooms": {
+                      "0d2c1591-8ac7-11eb-896d-fd2829b676c6(#room_id)": {
+                        "room_name": "102",
+                        "rate": 10,
+                        "service_status": "none_needed",
+                        "is_decommissioned": false,
+                        "type": "SUITE",
+                        "occupied_by": null,
+                        "clean_status": "finished_cleaning"
+                      },
+                      "0d2c1590-8ac7-11eb-896d-fd2829b676c6(#room_id)": {
+                        "room_name": "101",
+                        "rate": 10,
+                        "service_status": "none_needed",
+                        "is_decommissioned": false,
+                        "type": "KING",
+                        "occupied_by": null,
+                        "clean_status": "finished_cleaning"
+                      }
+                    }
+                  }
+                }
+              }            
+            
+put:
+  parameters:
+  - in: path
+    name: HIN
+    required: true
+    schema:
+      type: string
+    description: six digit pin number
+    example:
+      "123456"
+  - in: path
+    name: floor_id
+    required: true
+    schema:
+      type: string
+    description: id unique to the floor
+    example:
+      "ec4110a1-8225-11eb-9d5d-4fe6df708afd"
+  operationId: updateFloor
+  summary: Update the floor. All the rooms will be overwritten to default values and will be assigned new room_id.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            floor_name: string
+            rooms: 
+              type: object
+              properties:
+                additionalProperties: 
+                  type: object
+                  properties:
+                    type: 
+                      type: string
+          example:
+            {
+              "floor_name":"1F",
+              "rooms":{
+                "111":{
+                  "type":"KING"
+                },
+                "112":{
+                  "type":"SUITE"
+                }
+              }
+            }
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              floor:
+                $ref: "../../schemas/hotels/floor.yaml"
+            required:
+              - floor
+            example:
+              {
+                  "floor": {
+                      "ec4110a1-8225-11eb-9d5d-4fe6df708afd": {
+                          "floor_name": "1F",
+                          "rooms": {
+                              "265abbc0-8ae0-11eb-8d4c-1517d716eb2b": {
+                                  "room_name": "111",
+                                  "is_decommissioned": false,
+                                  "occupied_by": null,
+                                  "clean_status": "finished_cleaning",
+                                  "service_status": "none_needed",
+                                  "type": "SUITE",
+                                  "rate": 10
+                              },
+                              "265ae2d0-8ae0-11eb-8d4c-1517d716eb2b": {
+                                  "room_name": "112",
+                                  "is_decommissioned": false,
+                                  "occupied_by": null,
+                                  "clean_status": "finished_cleaning",
+                                  "service_status": "none_needed",
+                                  "type": "KING",
+                                  "rate": 10
+                              }
+                          }
+                      }
+                  }
+              }            
+
+delete:
+  parameters:
+  - in: path
+    name: HIN
+    required: true
+    schema:
+      type: string
+    description: six digit pin number
+    example:
+      "123456"
+  - in: path
+    name: floor_id
+    required: true
+    schema:
+      type: string
+    description: id unique to the floor
+    example:
+      "ec4110a1-8225-11eb-9d5d-4fe6df708afd"
+  operationId: deleteFloor
+  summary: Remove the floor from the hotel.
+  responses:
+    "204":
+      description: The resource was deleted successfully.

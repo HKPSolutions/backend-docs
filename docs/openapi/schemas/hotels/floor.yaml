@@ -1,0 +1,9 @@
+type: object
+properties:
+  floor_name:
+    type: string
+    example: "1F"
+  rooms:
+    type: object
+    additionalProperties:
+      $ref: "./room.yaml"

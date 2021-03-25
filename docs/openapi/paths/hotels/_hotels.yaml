@@ -1,0 +1,49 @@
+post:
+  operationId: createHotel
+  summary: Creates a new hotel.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            HIN:
+              type: string
+            name:
+              type: string
+            address:
+              type: string
+          required:
+            - HIN
+            - name
+            - address
+          example:
+            {
+              "HIN": "123321",
+              "name": "Marriot",
+              "address": "123 Generic Street, 12345, New York NY, USA"
+            }
+  responses:
+    "201":
+      description: Returns the newly created hotel.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              new_hotel:
+                $ref: "../../schemas/hotels/hotel.yaml"
+            required:
+              - new_hotel
+            example:
+              {
+                "new_hotel": {
+                  "HIN": "123321",
+                  "hotel_info": {
+                    "address": "123 Generic Street, 12345, New York NY, USA",
+                    "name": "Marriot"
+                  },
+                  "floors": {}
+                }
+              }
