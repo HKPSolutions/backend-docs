@@ -232,7 +232,7 @@ paths:
                   authResult:
                     $ref: "#/paths/~1users~1confirm-sign-up/post/responses/200/content/application~\
                       1json/schema/properties/authResult"
-  /hotel:
+  /hotels:
     post:
       operationId: createHotel
       summary: Creates a new hotel.
@@ -241,6 +241,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               properties:
                 HIN:
                   type: string
@@ -253,56 +254,16 @@ paths:
                 - name
                 - address
               example:
-                HIN: "123456"
+                HIN: "123321"
                 name: Marriot
                 address: 123 Generic Street, 12345, New York NY, USA
       responses:
-        "200":
+        "201":
           description: Returns the newly created hotel.
           content:
             application/json:
               schema:
-                properties:
-                  new_hotel:
-                    type: object
-                    properties:
-                      HIN:
-                        type: string
-                      name:
-                        type: string
-                      address:
-                        type: string
-                    required:
-                      - HIN
-                      - name
-                      - address
-                    example:
-                      HIN: "123456"
-                      name: Marriot
-                      address: 123 Generic Street, 12345, New York NY, USA
-                required:
-                  - new_hotel
-  "/hotel/{HIN}":
-    get:
-      operationId: getHotel
-      summary: Find hotel item by Hotel Identification Number (HIN).
-      parameters:
-        - in: path
-          name: HIN
-          required: true
-          schema:
-            type: string
-          description: six digit pin number, unique to each hotel
-          example: "000007"
-      responses:
-        "200":
-          description: Returns the hotel with matching HIN.
-          content:
-            application/json:
-              schema:
                 type: object
-                required:
-                  - new_hotel
                 properties:
                   new_hotel:
                     type: object
@@ -322,13 +283,84 @@ paths:
                       floors:
                         type: object
                         additionalProperties:
-                          $ref: "#/paths/~1hotel~1%7BHIN%7D~1floors/post/requestBody/content/application~\
-                            1json/schema"
+                          $ref: "#/paths/~1hotels~1%7BHIN%7D~1floors/post/responses/201/content/applicati\
+                            on~1json/schema/properties/floor/additionalProperti\
+                            es"
                     required:
                       - HIN
                       - hotel_info
                       - floors
-  "/hotel/{HIN}/floors":
+                    example:
+                      HIN: "123456"
+                      hotel_info:
+                        name: Marriot
+                        address: 123 Generic Street, 12345, New York NY, USA
+                      floors:
+                        66ef0282-8226-11eb-9d5d-4fe6df708afd(#floor_id):
+                          floor_name: 2F
+                          rooms:
+                            66ef0281-8226-11eb-9d5d-4fe6df708afd(#room_id):
+                              room_name: "201"
+                              rate: 10
+                              service_status: none_needed
+                              is_decommissioned: false
+                              type: SUITE
+                              occupied_by: null
+                              clean_status: finished_cleaning
+                        ec4110a1-8225-11eb-9d5d-4fe6df708afd(#floor_id):
+                          floor_name: 1F
+                          rooms:
+                            13a09df1-822b-11eb-b3e6-cb27df13eb4e(#room_id):
+                              room_name: "102"
+                              rate: 10
+                              service_status: none_needed
+                              is_decommissioned: false
+                              type: KING
+                              occupied_by: null
+                              clean_status: finished_cleaning
+                            13a09df0-822b-11eb-b3e6-cb27df13eb4e(#room_id):
+                              room_name: "101"
+                              rate: 10
+                              service_status: none_needed
+                              is_decommissioned: false
+                              type: SUITE
+                              occupied_by: null
+                              clean_status: finished_cleaning
+                required:
+                  - new_hotel
+                example:
+                  new_hotel:
+                    HIN: "123321"
+                    hotel_info:
+                      address: 123 Generic Street, 12345, New York NY, USA
+                      name: Marriot
+                    floors: {}
+  "/hotels/{HIN}":
+    get:
+      operationId: getHotel
+      summary: Find hotel item by Hotel Identification Number (HIN).
+      parameters:
+        - in: path
+          name: HIN
+          required: true
+          schema:
+            type: string
+          description: six digit pin number, unique to each hotel
+          example: "123456"
+      responses:
+        "200":
+          description: Returns the hotel with matching HIN.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - hotel
+                properties:
+                  hotel:
+                    $ref: "#/paths/~1hotels/post/responses/201/content/application~1json/schema/pro\
+                      perties/new_hotel"
+  "/hotels/{HIN}/floors":
     post:
       operationId: createFloor
       summary: Creates a new floor in the hotel with matching HIN.
@@ -339,7 +371,7 @@ paths:
           schema:
             type: string
           description: six digit pin number, unique to each hotel
-          example: "000007"
+          example: "123456"
       requestBody:
         required: true
         content:
@@ -347,37 +379,96 @@ paths:
             schema:
               type: object
               properties:
-                floor_name:
-                  type: string
+                floor_name: string
                 rooms:
                   type: object
-                  additionalProperties:
-                    type: object
-                    properties:
-                      room_name:
-                        type: string
-                      type:
-                        type: string
-                      is_decommissioned:
-                        type: string
-                      occupied_by:
-                        type: string
-                      clean_status:
-                        type: string
-                      service_status:
-                        type: string
+                  properties:
+                    additionalProperties:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+              example:
+                floor_name: 1F
+                rooms:
+                  "101":
+                    type: KING
+                  "102":
+                    type: SUITE
       responses:
-        "200":
+        "201":
           description: Returns the newly created floor.
           content:
             application/json:
               schema:
+                type: object
                 properties:
                   floor:
                     type: object
                     additionalProperties:
-                      $ref: "#/paths/~1hotel~1%7BHIN%7D~1floors/post/requestBody/content/application~\
-                        1json/schema"
+                      type: object
+                      properties:
+                        floor_name:
+                          type: string
+                          example: 1F
+                        rooms:
+                          type: object
+                          additionalProperties:
+                            type: object
+                            properties:
+                              room_name:
+                                type: string
+                              type:
+                                type: string
+                                enum:
+                                  - KING
+                                  - DOUBLE
+                                  - SUITE
+                                  - ADA
+                                  - null
+                              rate:
+                                type: number
+                              is_decommissioned:
+                                type: boolean
+                              occupied_by:
+                                type: string
+                              clean_status:
+                                type: string
+                                nullable: true
+                                enum:
+                                  - needs_cleaning
+                                  - current_clean
+                                  - finished_cleaning
+                                  - null
+                              service_status:
+                                type: string
+                                nullable: true
+                                enum:
+                                  - none_needed
+                                  - housekeeper_service
+                                  - serious_service
+                                  - null
+                example:
+                  floor:
+                    0d2c1592-8ac7-11eb-896d-fd2829b676c6(#floor_id):
+                      floor_name: 1F
+                      rooms:
+                        0d2c1590-8ac7-11eb-896d-fd2829b676c6(#room_id):
+                          room_name: "101"
+                          is_decommissioned: false
+                          occupied_by: null
+                          clean_status: finished_cleaning
+                          service_status: none_needed
+                          type: KING
+                          rate: 10
+                        0d2c1591-8ac7-11eb-896d-fd2829b676c6(room_id):
+                          room_name: "102"
+                          is_decommissioned: false
+                          occupied_by: null
+                          clean_status: finished_cleaning
+                          service_status: none_needed
+                          type: SUITE
+                          rate: 10
     get:
       operationId: getFloors
       summary: Get all floor of a hotel.
@@ -388,7 +479,7 @@ paths:
           schema:
             type: string
           description: six digit pin number, unique to each hotel
-          example: "000007"
+          example: "123456"
       responses:
         "200":
           description: Returns the hotel with matching HIN.
@@ -401,9 +492,41 @@ paths:
                 properties:
                   floors:
                     additionalProperties:
-                      $ref: "#/paths/~1hotel~1%7BHIN%7D~1floors/post/requestBody/content/application~\
-                        1json/schema"
-  "/hotel/{HIN}/floors/{floor_id}":
+                      $ref: "#/paths/~1hotels~1%7BHIN%7D~1floors/post/responses/201/content/applicati\
+                        on~1json/schema/properties/floor/additionalProperties"
+                example:
+                  floors:
+                    0d2c1592-8ac7-11eb-896d-fd2829b676c6(#floor_id):
+                      floor_name: 1F
+                      rooms:
+                        0d2c1591-8ac7-11eb-896d-fd2829b676c6(#room_id):
+                          room_name: "102"
+                          rate: 10
+                          service_status: none_needed
+                          is_decommissioned: false
+                          type: SUITE
+                          occupied_by: null
+                          clean_status: finished_cleaning
+                        0d2c1590-8ac7-11eb-896d-fd2829b676c6(#room_id):
+                          room_name: "101"
+                          rate: 10
+                          service_status: none_needed
+                          is_decommissioned: false
+                          type: KING
+                          occupied_by: null
+                          clean_status: finished_cleaning
+                    66ef0282-8226-11eb-9d5d-4fe6df708afd(#floor_id):
+                      floor_name: 2F
+                      rooms:
+                        66ef0281-8226-11eb-9d5d-4fe6df708afd(#room_id):
+                          room_name: "201"
+                          rate: 10
+                          service_status: none_needed
+                          is_decommissioned: false
+                          type: SUITE
+                          occupied_by: null
+                          clean_status: finished_cleaning
+  "/hotels/{HIN}/floors/{floor_id}":
     get:
       operationId: getFloor
       summary: Get a floor in a hotel.
@@ -414,25 +537,50 @@ paths:
           schema:
             type: string
           description: six digit pin number
-          example: "000007"
+          example: "123456"
         - in: path
           name: floor_id
           required: true
           schema:
             type: string
           description: id unique to the floor
+          example: 0d2c1592-8ac7-11eb-896d-fd2829b676c6
       responses:
         "200":
           description: Returns the floor with matching HIN and floor_id
           content:
-            applicatoin/json:
+            application/json:
               schema:
                 type: object
+                properties:
+                  floor:
+                    type: object
+                    additionalProperties:
+                      $ref: "#/paths/~1hotels~1%7BHIN%7D~1floors/post/responses/201/content/applicati\
+                        on~1json/schema/properties/floor/additionalProperties"
                 required: -floor
-                additionalProperties:
-                  $ref: "#/paths/~1hotel~1%7BHIN%7D~1floors/post/requestBody/content/application~\
-                    1json/schema"
-    patch:
+                example:
+                  floor:
+                    0d2c1592-8ac7-11eb-896d-fd2829b676c6(#floor_id):
+                      floor_name: 1F
+                      rooms:
+                        0d2c1591-8ac7-11eb-896d-fd2829b676c6(#room_id):
+                          room_name: "102"
+                          rate: 10
+                          service_status: none_needed
+                          is_decommissioned: false
+                          type: SUITE
+                          occupied_by: null
+                          clean_status: finished_cleaning
+                        0d2c1590-8ac7-11eb-896d-fd2829b676c6(#room_id):
+                          room_name: "101"
+                          rate: 10
+                          service_status: none_needed
+                          is_decommissioned: false
+                          type: KING
+                          occupied_by: null
+                          clean_status: finished_cleaning
+    put:
       parameters:
         - in: path
           name: HIN
@@ -440,34 +588,73 @@ paths:
           schema:
             type: string
           description: six digit pin number
-          example: "000007"
+          example: "123456"
         - in: path
           name: floor_id
           required: true
           schema:
             type: string
           description: id unique to the floor
+          example: ec4110a1-8225-11eb-9d5d-4fe6df708afd
       operationId: updateFloor
       summary: Update the floor. All the rooms will be overwritten to default values
-        and will be assigned new roomId.
+        and will be assigned new room_id.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/paths/~1hotel~1%7BHIN%7D~1floors/post/requestBody/content/application~\
-                1json/schema"
+              type: object
+              properties:
+                floor_name: string
+                rooms:
+                  type: object
+                  properties:
+                    additionalProperties:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+              example:
+                floor_name: 1F
+                rooms:
+                  "111":
+                    type: KING
+                  "112":
+                    type: SUITE
       responses:
         "200":
           content:
             application/json:
-              required:
-                - floor
               schema:
                 type: object
                 properties:
-                  $ref: "#/paths/~1hotel~1%7BHIN%7D~1floors/post/requestBody/content/application~\
-                    1json/schema"
+                  floor:
+                    $ref: "#/paths/~1hotels~1%7BHIN%7D~1floors/post/responses/201/content/applicati\
+                      on~1json/schema/properties/floor/additionalProperties"
+                required:
+                  - floor
+                example:
+                  floor:
+                    ec4110a1-8225-11eb-9d5d-4fe6df708afd:
+                      floor_name: 1F
+                      rooms:
+                        265abbc0-8ae0-11eb-8d4c-1517d716eb2b:
+                          room_name: "111"
+                          is_decommissioned: false
+                          occupied_by: null
+                          clean_status: finished_cleaning
+                          service_status: none_needed
+                          type: SUITE
+                          rate: 10
+                        265ae2d0-8ae0-11eb-8d4c-1517d716eb2b:
+                          room_name: "112"
+                          is_decommissioned: false
+                          occupied_by: null
+                          clean_status: finished_cleaning
+                          service_status: none_needed
+                          type: KING
+                          rate: 10
     delete:
       parameters:
         - in: path
@@ -476,21 +663,19 @@ paths:
           schema:
             type: string
           description: six digit pin number
-          example: "000007"
+          example: "123456"
         - in: path
           name: floor_id
           required: true
           schema:
             type: string
           description: id unique to the floor
+          example: ec4110a1-8225-11eb-9d5d-4fe6df708afd
       operationId: deleteFloor
       summary: Remove the floor from the hotel.
       responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                type: object
+        "204":
+          description: The resource was deleted successfully.
 components:
   securitySchemes:
     bearerAuthorizer:
