@@ -1,0 +1,34 @@
+type: object
+properties:
+  room_name:
+    type: string
+  type:
+    type: string
+    enum:
+      - KING
+      - DOUBLE
+      - SUITE
+      - ADA
+      - null        # <--- without quotes, i.e. null not "null"
+  rate:
+    type: number
+  is_decommissioned:
+    type: boolean
+  occupied_by:
+    type: string
+  clean_status:
+    type: string
+    nullable: true  # <---
+    enum:
+      - needs_cleaning
+      - current_clean
+      - finished_cleaning
+      - null        # <--- without quotes, i.e. null not "null"
+  service_status:
+    type: string
+    nullable: true  # <---
+    enum:
+      - none_needed
+      - housekeeper_service
+      - serious_service
+      - null        # <--- without quotes, i.e. null not "null"

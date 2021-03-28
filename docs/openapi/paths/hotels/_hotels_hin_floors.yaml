@@ -1,0 +1,147 @@
+post:
+  operationId: createFloor
+  summary: Creates a new floor in the hotel with matching HIN.
+  parameters:
+  - in: path
+    name: HIN
+    required: true
+    schema:
+      type: string
+    description: six digit pin number, unique to each hotel
+    example:
+      "123456"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            floor_name: string
+            rooms: 
+              type: object
+              properties:
+                additionalProperties: 
+                  type: object
+                  properties:
+                    type:
+                      type: string
+          example:
+            {
+              "floor_name":"1F",
+              "rooms":{
+                "101":{
+                  "type":"KING"
+                },
+                "102":{
+                  "type":"SUITE"
+                }
+              }
+            }
+  responses:
+    "201":
+      description: Returns the newly created floor.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              floor:
+                type: object
+                additionalProperties:
+                  $ref: "../../schemas/hotels/floor.yaml"
+            example:
+              {
+                "floor": {
+                    "0d2c1592-8ac7-11eb-896d-fd2829b676c6(#floor_id)": {
+                        "floor_name": "1F",
+                        "rooms": {
+                            "0d2c1590-8ac7-11eb-896d-fd2829b676c6(#room_id)": {
+                                "room_name": "101",
+                                "is_decommissioned": false,
+                                "occupied_by": null,
+                                "clean_status": "finished_cleaning",
+                                "service_status": "none_needed",
+                                "type": "KING",
+                                "rate": 10
+                            },
+                            "0d2c1591-8ac7-11eb-896d-fd2829b676c6(room_id)": {
+                                "room_name": "102",
+                                "is_decommissioned": false,
+                                "occupied_by": null,
+                                "clean_status": "finished_cleaning",
+                                "service_status": "none_needed",
+                                "type": "SUITE",
+                                "rate": 10
+                            }
+                        }
+                    }
+                }
+            }
+get:
+  operationId: getFloors
+  summary: Get all floor of a hotel.
+  parameters:
+    - in: path
+      name: HIN
+      required: true
+      schema:
+        type: string
+      description: six digit pin number, unique to each hotel
+      example:
+        "123456"
+  responses:
+    "200":
+      description: Returns the hotel with matching HIN.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - floors
+            properties:
+              floors:
+                additionalProperties:
+                  $ref: "../../schemas/hotels/floor.yaml"
+            example:
+              {
+                  "floors": {
+                      "0d2c1592-8ac7-11eb-896d-fd2829b676c6(#floor_id)": {
+                          "floor_name": "1F",
+                          "rooms": {
+                              "0d2c1591-8ac7-11eb-896d-fd2829b676c6(#room_id)": {
+                                  "room_name": "102",
+                                  "rate": 10,
+                                  "service_status": "none_needed",
+                                  "is_decommissioned": false,
+                                  "type": "SUITE",
+                                  "occupied_by": null,
+                                  "clean_status": "finished_cleaning"
+                              },
+                              "0d2c1590-8ac7-11eb-896d-fd2829b676c6(#room_id)": {
+                                  "room_name": "101",
+                                  "rate": 10,
+                                  "service_status": "none_needed",
+                                  "is_decommissioned": false,
+                                  "type": "KING",
+                                  "occupied_by": null,
+                                  "clean_status": "finished_cleaning"
+                              }
+                          }
+                      },
+                      "66ef0282-8226-11eb-9d5d-4fe6df708afd(#floor_id)": {
+                          "floor_name": "2F",
+                          "rooms": {
+                              "66ef0281-8226-11eb-9d5d-4fe6df708afd(#room_id)": {
+                                  "room_name": "201",
+                                  "rate": 10,
+                                  "service_status": "none_needed",
+                                  "is_decommissioned": false,
+                                  "type": "SUITE",
+                                  "occupied_by": null,
+                                  "clean_status": "finished_cleaning"
+                              }
+                          }
+                      }
+                  }
+              }            

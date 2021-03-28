@@ -9,7 +9,7 @@ get:
         type: string
       description: six digit pin number, unique to each hotel
       example:
-        "000007"
+        "123456"
   responses:
     "200":
       description: Returns the hotel with matching HIN.
@@ -18,7 +18,7 @@ get:
           schema:
             type: object
             required:
-              - new_hotel
+              - hotel
             properties:
-              new_hotel:
-                $ref: "../../schemas/hotel.yaml"
+              hotel:
+                $ref: "../../schemas/hotels/hotel.yaml"
