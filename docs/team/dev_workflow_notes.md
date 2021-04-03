@@ -38,6 +38,7 @@ If you need new resources, e.g. new dynamoDB tables, you need to add it to [back
 
 2. Then, push it back to github and create a PR. It will be deployed by SEED, and the `pr#` of this PR will be used as the `stage` for this deployment. **(TBD: Tag the PR draft with the `draft` label)**
 
+
 ## Develop Serverless functions
 If you need to add new serverless functions, you need to add it to [backend-serverless-api repository](https://github.com/HKPSolutions/backend-serverless-api).
 
@@ -115,7 +116,6 @@ If you need to add new serverless functions, you need to add it to [backend-serv
         # <pr#_of_your_branch_on_API_repo>: <pr#_of_your_branch_on_RESOURCE_repo>
         pr10: pr4
     ```
-
    
 5. Test it with the following command. 
    When our PR is deployed by SEED, it sets the `stage` to the `pr#`, but `serverless invoke local` won't do that, so we need to specify it. We also need to use our HKP AWS account to interact with the resources on AWS. 
@@ -152,5 +152,40 @@ If you need to add new serverless functions, you need to add it to [backend-serv
 ## Testing
 [Examples of mock.json for serverless invoke local](https://serverless-stack.com/chapters/invoke-lambda-functions-locally.html)
 
-## References
+## Useful Git commands
+1. stash local changes when you want to checkout to other branch, but don't want to commit these changes.
+    ```sh
+    # stash local changes
+    git stash
+
+    # list all stash
+    git stash list
+
+    # apply changes from a stash
+    gut stash apply <stash_name>
+    ```
+
+2. create and checkout to a new feature branch
+    ```sh
+    git checkout -b <add-new-feature>
+    ```
+
+3. Before pushing your branch to github, merge master/main branch to resolve any potential conflicts.
+
+    ```sh
+    # update the master/main branch
+    git checkout main
+    git pull
+
+    # on your feature branch, merge master
+    git checkout <branch_name>
+    git merge master
+
+    # push your branch
+    # set up the upstream with `-u` at the first push
+    # Then you can simply use `git push`
+    git push -u origin <branch_name> 
+    ```
+
+## Other References
 [Serverless Stack Guideline](https://serverless-stack.com/#table-of-contents)
