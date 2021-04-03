@@ -149,8 +149,16 @@ If you need to add new serverless functions, you need to add it to [backend-serv
     # }
     ```
 
+6. Add the actual business logic and develop your APIs. 
+   
+7. Test your APIs with `serverless invoke local` to catch any syntax and/or webpack errors that might cause fail deployment with SEED.
+
+8. After you successfully deploy your service with SEED, go to AWS console -> API gateway to find the URL of your build. Test it with Postman.
+
+
 ## Testing
 [Examples of mock.json for serverless invoke local](https://serverless-stack.com/chapters/invoke-lambda-functions-locally.html)
+
 
 ## Useful Git commands
 1. stash local changes when you want to checkout to other branch, but don't want to commit these changes.
@@ -186,6 +194,7 @@ If you need to add new serverless functions, you need to add it to [backend-serv
     # Then you can simply use `git push`
     git push -u origin <branch_name> 
     ```
+
 
 ## Other References
 [Serverless Stack Guideline](https://serverless-stack.com/#table-of-contents)
