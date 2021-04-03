@@ -153,7 +153,7 @@ If you need to add new serverless functions, you need to add it to [backend-serv
    
 7. Test your APIs with `serverless invoke local` to catch any syntax and/or webpack errors that might cause fail deployment with SEED.
 
-8. After you successfully deploy your service with SEED, go to AWS console -> API gateway to find the URL of your build. Test it with Postman. **(NOTE: now SEED is not deploying newly added services)**
+8. After you successfully deploy your service with SEED, go to AWS console -> API gateway to find the URL of your build. Test it with Postman. **(NOTE: now SEED is not deploying newly added services, ask Caleb to deploy it manually if needed.)**
 
 
 ## Testing
