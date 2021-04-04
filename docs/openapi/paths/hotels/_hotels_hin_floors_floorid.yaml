@@ -89,22 +89,42 @@ put:
           type: object
           properties:
             floor_name: string
-            rooms: 
+            newRooms:
               type: object
               properties:
-                additionalProperties: 
+                additionalProperties:
                   type: object
                   properties:
-                    type: 
+                    type:
+                      type: string
+            existingRooms:
+              type: object
+              properties:
+                additionalProperties:
+                  type: object
+                  properties:
+                    room_name:
+                      type: string
+                    type:
                       type: string
           example:
             {
               "floor_name":"1F",
-              "rooms":{
+              "newRooms":{
                 "111":{
                   "type":"KING"
                 },
                 "112":{
+                  "type":"SUITE"
+                }
+              },
+              "existingRooms":{
+                "0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d":{
+                  "room_name": 101,                  
+                  "type":"KING"
+                },
+                "0e3d38a2-8ae1-11eb-a90d-e1e56f4ad85d":{
+                  "room_name": 102,                  
                   "type":"SUITE"
                 }
               }
