@@ -2,30 +2,9 @@ get:
   operationId: getRoom
   summary: Get a specific room object.
   parameters:
-    - in: path
-      name: HIN
-      required: true
-      schema:
-        type: string
-      description: six digit pin number
-      example:
-        "123456"
-    - in: path
-      name: floor_id
-      required: true
-      schema:
-        type: string
-      description: id unique to the floor
-      example:
-        "0e3d38a2-8ae1-11eb-a90d-e1e56f4ad85d"
-    - in: path
-      name: room_id
-      required: true
-      schema:
-        type: string
-      description: id unique to the room
-      example:
-        "0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d"
+    - $ref: '../../params/hotel_params.yaml#/HIN'
+    - $ref: '../../params/hotel_params.yaml#/floor_id'
+    - $ref: '../../params/hotel_params.yaml#/room_id'
   responses:
     200:
       description: OK
@@ -64,30 +43,9 @@ patch:
         schema:
           $ref: "../../schemas/hotels/room.yaml" 
   parameters:
-    - in: path
-      name: HIN
-      required: true
-      schema:
-        type: string
-      description: six digit pin number
-      example:
-        "123456"
-    - in: path
-      name: floor_id
-      required: true
-      schema:
-        type: string
-      description: id unique to the floor
-      example:
-        "0e3d38a2-8ae1-11eb-a90d-e1e56f4ad85d"
-    - in: path
-      name: room_id
-      required: true
-      schema:
-        type: string
-      description: id unique to the room
-      example:
-        "0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d"
+    - $ref: '../../params/hotel_params.yaml#/HIN'
+    - $ref: '../../params/hotel_params.yaml#/floor_id'
+    - $ref: '../../params/hotel_params.yaml#/room_id'
   responses:
     200:
       description: OK
@@ -121,30 +79,9 @@ delete:
   operationId: deleteRoom
   summary: Delete the room object.
   parameters:
-    - in: path
-      name: HIN
-      required: true
-      schema:
-        type: string
-      description: six digit pin number
-      example:
-        "123456"
-    - in: path
-      name: floor_id
-      required: true
-      schema:
-        type: string
-      description: id unique to the floor
-      example:
-        "0e3d38a2-8ae1-11eb-a90d-e1e56f4ad85d"
-    - in: path
-      name: room_id
-      required: true
-      schema:
-        type: string
-      description: id unique to the room
-      example:
-        "0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d"
+    - $ref: '../../params/hotel_params.yaml#/HIN'
+    - $ref: '../../params/hotel_params.yaml#/floor_id'
+    - $ref: '../../params/hotel_params.yaml#/room_id'
   responses:
     204:
       description: No Content

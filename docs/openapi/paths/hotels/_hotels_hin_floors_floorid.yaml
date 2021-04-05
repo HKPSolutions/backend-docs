@@ -2,22 +2,8 @@ get:
   operationId: getFloor
   summary: Get a floor in a hotel.
   parameters:
-    - in: path
-      name: HIN
-      required: true
-      schema:
-        type: string
-      description: six digit pin number
-      example:
-        "123456"
-    - in: path
-      name: floor_id
-      required: true
-      schema:
-        type: string
-      description: id unique to the floor
-      example:
-        "0d2c1592-8ac7-11eb-896d-fd2829b676c6"
+    - $ref: '../../params/hotel_params.yaml#/HIN'
+    - $ref: '../../params/hotel_params.yaml#/floor_id'
   responses:
     "200":
       description: Returns the floor with matching HIN and floor_id
@@ -62,25 +48,11 @@ get:
               }            
             
 put:
-  parameters:
-  - in: path
-    name: HIN
-    required: true
-    schema:
-      type: string
-    description: six digit pin number
-    example:
-      "123456"
-  - in: path
-    name: floor_id
-    required: true
-    schema:
-      type: string
-    description: id unique to the floor
-    example:
-      "ec4110a1-8225-11eb-9d5d-4fe6df708afd"
   operationId: updateFloor
-  summary: Update the floor. All the rooms will be overwritten to default values and will be assigned new room_id.
+  summary: Update the floor.
+  parameters:
+    - $ref: '../../params/hotel_params.yaml#/HIN'
+    - $ref: '../../params/hotel_params.yaml#/floor_id'
   requestBody:
     required: true
     content:
@@ -170,25 +142,11 @@ put:
               }            
 
 delete:
-  parameters:
-  - in: path
-    name: HIN
-    required: true
-    schema:
-      type: string
-    description: six digit pin number
-    example:
-      "123456"
-  - in: path
-    name: floor_id
-    required: true
-    schema:
-      type: string
-    description: id unique to the floor
-    example:
-      "ec4110a1-8225-11eb-9d5d-4fe6df708afd"
   operationId: deleteFloor
   summary: Remove the floor from the hotel.
+  parameters:
+    - $ref: '../../params/hotel_params.yaml#/HIN'
+    - $ref: '../../params/hotel_params.yaml#/floor_id'
   responses:
     "204":
       description: The resource was deleted successfully.

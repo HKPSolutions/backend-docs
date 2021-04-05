@@ -2,14 +2,7 @@ post:
   operationId: createFloor
   summary: Creates a new floor in the hotel with matching HIN.
   parameters:
-  - in: path
-    name: HIN
-    required: true
-    schema:
-      type: string
-    description: six digit pin number, unique to each hotel
-    example:
-      "123456"
+    - $ref: '../../params/hotel_params.yaml#/HIN'
   requestBody:
     required: true
     content:
@@ -80,19 +73,12 @@ post:
             }
 get:
   operationId: getFloors
-  summary: Get all floor of a hotel.
+  summary: Get all floors of a hotel.
   parameters:
-    - in: path
-      name: HIN
-      required: true
-      schema:
-        type: string
-      description: six digit pin number, unique to each hotel
-      example:
-        "123456"
+    - $ref: '../../params/hotel_params.yaml#/HIN'
   responses:
     "200":
-      description: Returns the hotel with matching HIN.
+      description: Returns all the floors of the hotel with matching HIN.
       content:
         application/json:
           schema:

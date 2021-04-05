@@ -2,14 +2,7 @@ get:
   operationId: getHotelMetrics
   summary: Get metrics for all floors (of a hotel) in aggregate.
   parameters:
-    - in: path
-      name: HIN
-      required: true
-      schema:
-        type: string
-      description: six digit pin number, unique to each hotel
-      example:
-        "123456"
+    - $ref: '../../params/hotel_params.yaml#/HIN'
   responses:
     200:
       description: OK
