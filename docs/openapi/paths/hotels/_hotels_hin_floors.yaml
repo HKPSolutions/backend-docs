@@ -51,7 +51,7 @@ get:
             properties:
               floors:
                 additionalProperties:
-                  $ref: "../../schemas/hotels/floor.yaml"
+                  $ref: '../../schemas/hotels/floor.yaml'
             example:
               floors:
                 $ref: '../../examples/hotels/hotel.yaml#/floors'

@@ -21,7 +21,7 @@ patch:
     content:
       application/json:
         schema:
-          $ref: "../../schemas/hotels/room.yaml" 
+          $ref: '../../schemas/hotels/room.yaml' 
   parameters:
     - $ref: '../../params/hotel_params.yaml#/HIN'
     - $ref: '../../params/hotel_params.yaml#/floor_id'

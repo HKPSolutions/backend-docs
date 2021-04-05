@@ -5,3 +5,12 @@ properties:
     properties:
       type:
         type: string
+example:
+  {
+    "101":{
+      "type":"SUITE"
+    },
+    "102":{
+      "type":"KING"
+    }
+  }

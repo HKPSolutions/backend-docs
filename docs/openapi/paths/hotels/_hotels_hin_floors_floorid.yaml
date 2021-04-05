@@ -68,11 +68,11 @@ put:
             type: object
             properties:
               floor:
-                $ref: "../../schemas/hotels/floor.yaml"
+                $ref: '../../schemas/hotels/floor.yaml'
             required:
               - floor
             example:
-                $ref: "../../examples/hotels/updated_floor.json"
+                $ref: '../../examples/hotels/updated_floor.json'
 
 delete:
   operationId: deleteFloor
