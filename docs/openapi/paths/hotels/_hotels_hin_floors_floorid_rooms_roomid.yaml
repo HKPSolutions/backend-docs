@@ -11,31 +11,11 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - room
-            properties:
-              room:
-                additionalProperties:
-                  $ref: "../../schemas/hotels/room.yaml" 
-            example:
-              {
-                "room": {
-                  "0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d": {
-                    "room_name": "101",
-                    "rate": 10,
-                    "service_status": "none_needed",
-                    "is_decommissioned": false,
-                    "type": "KING",
-                    "occupied_by": null,
-                    "clean_status": "finished_cleaning"
-                  }
-                }
-              }
+            $ref: '../../schemas/hotels/room_res.yaml'
 
 patch:
   operationId: updateRoom
-  summary: Update a specific room object.
+  summary: Update a specific room object. All the fields in the request body are optional.
   requestBody:
     required: true
     content:
@@ -52,28 +32,21 @@ patch:
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - room
-            properties:
-              room:
-                type: object
-                additionalProperties:
-                  $ref: "../../schemas/hotels/room.yaml"
-            example:
-              {
-                "room": {
-                  "0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d": {
-                    "room_name": "123",
-                    "occupied_by": "John Doe",
-                    "is_decommissioned": true,
-                    "clean_status": "needs_cleaning",
-                    "service_status": "need_cleaning", 
-                    "type": "SUITE",
-                    # "rate": 12,
-                  }
+            $ref: '../../schemas/hotels/room_res.yaml'
+          example:
+            {
+              "room": {
+                "0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d": {
+                  "room_name": "123",
+                  "occupied_by": "John Doe",
+                  "is_decommissioned": true,
+                  "clean_status": "needs_cleaning",
+                  "service_status": "need_cleaning", 
+                  "type": "SUITE",
+                  # "rate": 12,
                 }
-              }            
+              }
+            }            
 
 delete:
   operationId: deleteRoom
