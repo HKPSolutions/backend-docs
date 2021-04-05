@@ -9,9 +9,4 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - metrics
-            properties:
-              metrics:
-                $ref: "../../schemas/hotels/metrics.yaml" 
+            $ref: '../../schemas/hotels/metrics_res.yaml' 
