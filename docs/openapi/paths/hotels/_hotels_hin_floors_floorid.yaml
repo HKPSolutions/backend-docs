@@ -10,43 +10,8 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              floor:
-                type: object
-                additionalProperties:
-                  $ref: "../../schemas/hotels/floor.yaml"
-            required:
-              -floor
-            example:
-              {
-                "floor": {
-                  "0d2c1592-8ac7-11eb-896d-fd2829b676c6(#floor_id)": {
-                    "floor_name": "1F",
-                    "rooms": {
-                      "0d2c1591-8ac7-11eb-896d-fd2829b676c6(#room_id)": {
-                        "room_name": "102",
-                        "rate": 10,
-                        "service_status": "none_needed",
-                        "is_decommissioned": false,
-                        "type": "SUITE",
-                        "occupied_by": null,
-                        "clean_status": "finished_cleaning"
-                      },
-                      "0d2c1590-8ac7-11eb-896d-fd2829b676c6(#room_id)": {
-                        "room_name": "101",
-                        "rate": 10,
-                        "service_status": "none_needed",
-                        "is_decommissioned": false,
-                        "type": "KING",
-                        "occupied_by": null,
-                        "clean_status": "finished_cleaning"
-                      }
-                    }
-                  }
-                }
-              }            
-            
+            $ref: '../../schemas/hotels/floor_res.yaml'
+
 put:
   operationId: updateFloor
   summary: Update the floor.
@@ -62,13 +27,7 @@ put:
           properties:
             floor_name: string
             newRooms:
-              type: object
-              properties:
-                additionalProperties:
-                  type: object
-                  properties:
-                    type:
-                      type: string
+              $ref: '../../schemas/hotels/room_req.yaml'
             existingRooms:
               type: object
               properties:
@@ -113,33 +72,7 @@ put:
             required:
               - floor
             example:
-              {
-                  "floor": {
-                      "ec4110a1-8225-11eb-9d5d-4fe6df708afd": {
-                          "floor_name": "1F",
-                          "rooms": {
-                              "265abbc0-8ae0-11eb-8d4c-1517d716eb2b": {
-                                  "room_name": "111",
-                                  "is_decommissioned": false,
-                                  "occupied_by": null,
-                                  "clean_status": "finished_cleaning",
-                                  "service_status": "none_needed",
-                                  "type": "SUITE",
-                                  "rate": 10
-                              },
-                              "265ae2d0-8ae0-11eb-8d4c-1517d716eb2b": {
-                                  "room_name": "112",
-                                  "is_decommissioned": false,
-                                  "occupied_by": null,
-                                  "clean_status": "finished_cleaning",
-                                  "service_status": "none_needed",
-                                  "type": "KING",
-                                  "rate": 10
-                              }
-                          }
-                      }
-                  }
-              }            
+                $ref: "../../examples/hotels/updated_floor.json"
 
 delete:
   operationId: deleteFloor
