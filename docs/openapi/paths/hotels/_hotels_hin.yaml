@@ -17,8 +17,10 @@ get:
         application/json:
           schema:
             type: object
-            required:
-              - hotel
             properties:
               hotel:
-                $ref: "../../schemas/hotels/hotel.yaml"
+                $ref: '../../schemas/hotels/hotel.yaml'
+            required:
+              - hotel
+          example:
+            $ref: '../../examples/hotels/hotel.yaml'
