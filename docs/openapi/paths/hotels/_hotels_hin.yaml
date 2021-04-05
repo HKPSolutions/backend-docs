@@ -16,4 +16,5 @@ get:
             required:
               - hotel
           example:
-            $ref: '../../examples/hotels/hotel.yaml'
+            hotel:
+              $ref: '../../examples/hotels/hotel.yaml'

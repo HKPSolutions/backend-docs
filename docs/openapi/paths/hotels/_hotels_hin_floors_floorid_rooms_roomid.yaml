@@ -41,7 +41,7 @@ patch:
                   "occupied_by": "John Doe",
                   "is_decommissioned": true,
                   "clean_status": "needs_cleaning",
-                  "service_status": "need_cleaning", 
+                  "service_status": "housekeeper_service", 
                   "type": "SUITE",
                   # "rate": 12,
                 }
