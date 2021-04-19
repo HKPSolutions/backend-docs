@@ -1,0 +1,29 @@
+HIN:
+  in: path
+  name: HIN
+  required: true
+  schema:
+    type: string
+  description: six digit pin number, unique to each hotel
+  example:
+    "123456"
+
+floor_id:
+  in: path
+  name: floor_id
+  required: true
+  schema:
+    type: string
+  description: id unique to the floor
+  example:
+    "ec4110a1-8225-11eb-9d5d-4fe6df708afd"
+
+room_id:
+  in: path
+  name: room_id
+  required: true
+  schema:
+    type: string
+  description: id unique to the room
+  example:
+    "0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d"

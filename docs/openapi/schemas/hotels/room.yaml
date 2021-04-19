@@ -32,3 +32,12 @@ properties:
       - housekeeper_service
       - serious_service
       - null        # <--- without quotes, i.e. null not "null"
+example:
+  {
+    "room_name": "123",
+    "occupied_by": "John Doe",
+    "is_decommissioned": true,
+    "clean_status": "needs_cleaning",
+    "service_status": "housekeeper_service", 
+    "type": "SUITE"
+  }

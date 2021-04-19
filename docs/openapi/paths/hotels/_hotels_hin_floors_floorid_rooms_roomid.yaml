@@ -1,0 +1,60 @@
+get:
+  operationId: getRoom
+  summary: Get a specific room object.
+  parameters:
+    - $ref: '../../params/hotel_params.yaml#/HIN'
+    - $ref: '../../params/hotel_params.yaml#/floor_id'
+    - $ref: '../../params/hotel_params.yaml#/room_id'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/hotels/room_res.yaml'
+
+patch:
+  operationId: updateRoom
+  summary: Update a specific room object. All the fields in the request body are optional.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/hotels/room.yaml' 
+  parameters:
+    - $ref: '../../params/hotel_params.yaml#/HIN'
+    - $ref: '../../params/hotel_params.yaml#/floor_id'
+    - $ref: '../../params/hotel_params.yaml#/room_id'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/hotels/room_res.yaml'
+          example:
+            {
+              "room": {
+                "0e3d38a0-8ae1-11eb-a90d-e1e56f4ad85d": {
+                  "room_name": "123",
+                  "occupied_by": "John Doe",
+                  "is_decommissioned": true,
+                  "clean_status": "needs_cleaning",
+                  "service_status": "housekeeper_service", 
+                  "type": "SUITE",
+                  # "rate": 12,
+                }
+              }
+            }            
+
+delete:
+  operationId: deleteRoom
+  summary: Delete the room object.
+  parameters:
+    - $ref: '../../params/hotel_params.yaml#/HIN'
+    - $ref: '../../params/hotel_params.yaml#/floor_id'
+    - $ref: '../../params/hotel_params.yaml#/room_id'
+  responses:
+    204:
+      description: No Content

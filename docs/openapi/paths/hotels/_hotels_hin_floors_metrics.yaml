@@ -1,0 +1,44 @@
+get:
+  operationId: getFloorsMetrics
+  summary: Get metrics for each of all the floors.
+  parameters:
+    - $ref: '../../params/hotel_params.yaml#/HIN'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - metrics
+            properties:
+              metrics:
+                additionalProperties: 
+                  type: object
+                  properties:
+                    room_counts:
+                      type: integer 
+                    cleared:
+                      type: integer 
+                    have_issues:
+                      type: integer 
+                    decommissioned:
+                      type: integer 
+          example:
+            {
+              "metrics": {
+                "1F": {
+                  "room_counts": 2,
+                  "cleared": 2,
+                  "have_issues": 0,
+                  "decommissioned": 0
+                },
+                "2F": {
+                  "room_counts": 1,
+                  "cleared": 1,
+                  "have_issues": 0,
+                  "decommissioned": 0
+                }
+              }
+            }    

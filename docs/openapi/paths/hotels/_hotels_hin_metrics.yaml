@@ -1,0 +1,12 @@
+get:
+  operationId: getHotelMetrics
+  summary: Get metrics for all floors (of a hotel) in aggregate.
+  parameters:
+    - $ref: '../../params/hotel_params.yaml#/HIN'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/hotels/metrics_res.yaml' 

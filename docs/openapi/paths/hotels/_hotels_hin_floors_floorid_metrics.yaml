@@ -1,0 +1,13 @@
+get:
+  operationId: getFloorMetrics
+  summary: Get metrics for a specific floor.
+  parameters:
+    - $ref: '../../params/hotel_params.yaml#/HIN'
+    - $ref: '../../params/hotel_params.yaml#/floor_id'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/hotels/metrics_res.yaml' 
