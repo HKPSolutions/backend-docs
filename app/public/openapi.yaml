@@ -218,7 +218,7 @@ paths:
                   type: string
             example:
               username: bob
-              email: bob@company.com
+              password: mypassword
       responses:
         "200":
           description: OK

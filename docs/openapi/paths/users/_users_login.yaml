@@ -15,7 +15,7 @@ post:
               type: string
             password:
               type: string
-        example: { username: bob, email: bob@company.com }
+        example: { username: bob, password: mypassword }
   responses:
     200:
       description: OK
