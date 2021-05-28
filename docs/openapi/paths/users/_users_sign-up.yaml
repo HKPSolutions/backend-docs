@@ -1,6 +1,6 @@
 post:
   operationId: usersSignUpUnConfirmed
-  summary: Sign's up an user, but doesn't confirm them. To confirm an user, a confirmation text will be sent the the phone number. The phone number should be in international phone number format -- e.g.; an US phone number (202)456-1111 would be "+12024561111".
+  summary: Sign's up an user, but doesn't confirm them. To confirm an user, a confirmation text will be sent the the phone number.
   requestBody:
     required: true
     content:
@@ -21,6 +21,13 @@ post:
               type: string
             phoneNumber:
               type: string
+          example:
+            {
+              "username": "claeb_user_1",
+              "password": "!testUser2PW",
+              "email": "caleb.arulandu@hkpsolutions.com",
+              "phoneNumber": "+12345678910"
+            }          
 
   responses:
     200:

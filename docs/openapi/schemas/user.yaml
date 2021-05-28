@@ -12,3 +12,14 @@ properties:
     type: string
   endDate:
     type: string
+  HIN:
+    type: string
+example:
+  {
+    "userId": "abc413a6-9e10-4e66-99b8-a3e257148dfb",
+    "username": "claeb_user_1",
+    "profileInfo": {},
+    "employmentType": "HKP",
+    "startDate": "2021-05-28T20:37:56.271Z",
+    "HIN": "123456"
+  }

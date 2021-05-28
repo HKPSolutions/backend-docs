@@ -15,7 +15,12 @@ post:
               type: string
             password:
               type: string
-        example: { username: bob, email: bob@company.com }
+        example: 
+          { 
+            username: "claeb_user_1", 
+            password: "!testUser2PW"
+          }
+
   responses:
     200:
       description: OK
@@ -25,6 +30,16 @@ post:
             type: object
             required:
               - authResult
+              - user
             properties:
               authResult:
                 $ref: "../../schemas/authResult.yaml"
+              user:
+                type: object
+                properties:
+                  HIN:
+                    type: string
+                example: 
+                  {
+                    "HIN": "123456"
+                  }
