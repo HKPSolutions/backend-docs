@@ -14,6 +14,7 @@ post:
             - phoneNumber
             - confirmationCode
             - employmentType
+            - HIN
             - profileInfo
           properties:
             username:
@@ -28,8 +29,22 @@ post:
               type: integer
             employmentType:
               type: string
+            HIN:
+              type: string
             profileInfo:
               $ref: "../../schemas/profileInfo.yaml"
+          example:
+            {
+              "username": "claeb_user_1",
+              "password": "!testUser2PW",
+              "email": "caleb.arulandu@hkpsolutions.com",
+              "phoneNumber": "+12345678910",
+              "confirmationCode": 987654,
+              "employmentType": "HKP",
+              "HIN": "123456",
+              "profileInfo": {
+              }
+            }
 
   responses:
     200:
@@ -43,5 +58,5 @@ post:
             properties:
               authResult:
                 $ref: "../../schemas/authResult.yaml"
-              item:
+              user:
                 $ref: "../../schemas/user.yaml"

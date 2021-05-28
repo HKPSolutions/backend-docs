@@ -62,9 +62,7 @@ paths:
     post:
       operationId: usersSignUpUnConfirmed
       summary: Sign's up an user, but doesn't confirm them. To confirm an user, a
-        confirmation text will be sent the the phone number. The phone number
-        should be in international phone number format -- e.g.; an US phone
-        number (202)456-1111 would be "+12024561111".
+        confirmation text will be sent the the phone number.
       requestBody:
         required: true
         content:
@@ -85,6 +83,11 @@ paths:
                   type: string
                 phoneNumber:
                   type: string
+              example:
+                username: claeb_user_1
+                password: "!testUser2PW"
+                email: caleb.arulandu@hkpsolutions.com
+                phoneNumber: "+12345678910"
       responses:
         "200":
           description: OK
@@ -112,6 +115,7 @@ paths:
                 - phoneNumber
                 - confirmationCode
                 - employmentType
+                - HIN
                 - profileInfo
               properties:
                 username:
@@ -125,6 +129,8 @@ paths:
                 confirmationCode:
                   type: integer
                 employmentType:
+                  type: string
+                HIN:
                   type: string
                 profileInfo:
                   type: object
@@ -147,6 +153,15 @@ paths:
                       type: string
                     phone:
                       type: string
+              example:
+                username: claeb_user_1
+                password: "!testUser2PW"
+                email: caleb.arulandu@hkpsolutions.com
+                phoneNumber: "+12345678910"
+                confirmationCode: 987654
+                employmentType: HKP
+                HIN: "123456"
+                profileInfo: {}
       responses:
         "200":
           description: OK
@@ -182,7 +197,7 @@ paths:
                       TokenType: Bearer
                       Refreshtoken: bwefja....bawefioje
                       IdToken: ceqioj....faweijbw
-                  item:
+                  user:
                     type: object
                     properties:
                       userId:
@@ -198,6 +213,15 @@ paths:
                         type: string
                       endDate:
                         type: string
+                      HIN:
+                        type: string
+                    example:
+                      userId: abc413a6-9e10-4e66-99b8-a3e257148dfb
+                      username: claeb_user_1
+                      profileInfo: {}
+                      employmentType: HKP
+                      startDate: 2021-05-28T20:37:56.271Z
+                      HIN: "123456"
   /users/login:
     post:
       operationId: usersLogin
@@ -217,8 +241,8 @@ paths:
                 password:
                   type: string
             example:
-              username: bob
-              email: bob@company.com
+              username: claeb_user_1
+              password: "!testUser2PW"
       responses:
         "200":
           description: OK
@@ -228,10 +252,18 @@ paths:
                 type: object
                 required:
                   - authResult
+                  - user
                 properties:
                   authResult:
                     $ref: "#/paths/~1users~1confirm-sign-up/post/responses/200/content/application~\
                       1json/schema/properties/authResult"
+                  user:
+                    type: object
+                    properties:
+                      HIN:
+                        type: string
+                    example:
+                      HIN: "123456"
   /hotels:
     post:
       operationId: createHotel
